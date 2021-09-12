@@ -1,0 +1,20 @@
+body {
+  background: #003bb8;
+  background-image: linear-gradient(120deg,#003bb8,#269edb);
+}
+
+.app {
+  min-height: 100vh;
+}
+
+span {
+  height: 100%;
+  font-weight: bolder;
+  font-size: 1.4em;
+  height: auto;
+  color: #f9f4f4;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
