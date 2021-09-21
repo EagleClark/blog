@@ -5,14 +5,19 @@ body {
 
 .app {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 span {
-  height: 100%;
-  font-weight: bolder;
-  font-size: 1.4em;
-  height: auto;
-  color: #f9f4f4;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+li {
   a {
     text-decoration: none;
     color: inherit;
