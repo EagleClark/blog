@@ -26,16 +26,16 @@ export default function Header() {
 
   const listData = [
     { href: '/', text: '主页' },
-    { href: '/', text: '技术文章' },
-    { href: '/', text: 'Github' },
-    { href: '/', text: '关于我' },
+    { href: 'https://juejin.cn/user/2875978150314408/posts', text: '技术文章' },
+    { href: 'https://github.com/EagleClark', text: 'Github' },
+    { href: 'mailto:eagleclark@163.com', text: '联系我' },
   ];
 
   return (
     <div className="header">
       <div className="headerContainer">
         <div className="logo">
-          <span><a href="/">Eagle</a></span>
+          <span><a href="/">Eagle Clark</a></span>
         </div>
         <div className="headNav">
           <div className="navList">

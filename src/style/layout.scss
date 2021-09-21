@@ -17,6 +17,7 @@
 }
 
 .headNav {
+  z-index: 3;
   display: flex;
   align-items: center;
   height: 100%;
@@ -113,6 +114,13 @@
 .home {
   width: 100%;
   max-height: 100vh;
+}
+
+.intro {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0;
 }
 
 .footer {
