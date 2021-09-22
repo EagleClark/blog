@@ -1,6 +1,7 @@
 .header {
   width: 100%;
   height: 80px;
+  z-index: 4;
 }
 
 .headerContainer {
@@ -39,7 +40,7 @@
   span {
     font-weight: normal;
     font-size: 1.2em;
-    margin: auto 40px;
+    margin: auto 20px;
     color: #f9f4f4;
   }
 }
@@ -48,20 +49,6 @@
   display: none;
   cursor: pointer;
   color: #fefefe;
-}
-
-@media only screen and (max-width: 1024px) {
-  .headerContainer {
-    padding: 0 30px;
-  }
-
-  .navList {
-    display: none;
-  }
-
-  .sideBar {
-    display: block;
-  }
 }
 
 .svgIcon {
@@ -91,24 +78,42 @@
   }
 }
 
-.sideMenuShow {
-  @include sideMenu;
-  z-index: 10;
-  opacity: 1;
-  transform: none;
-  transition-property: opacity, transform;
-  transition-duration: 267ms, 178ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+.sideMenuHide, .sideMenuShow {
+  opacity: 0;
 }
 
-.sideMenuHide {
-  @include sideMenu;
-  z-index: -10;
-  opacity: 0;
-  transform: scale(0.75, 0.5625);
-  transition-property: opacity, transform;
-  transition-duration: 267ms, 178ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+@media only screen and (max-width: 1024px) {
+  .headerContainer {
+    padding: 0 30px;
+  }
+
+  .navList {
+    display: none;
+  }
+
+  .sideBar {
+    display: block;
+  }
+
+  .sideMenuHide {
+    @include sideMenu;
+    z-index: -10;
+    opacity: 0;
+    transform: scale(0.75, 0.5625);
+    transition-property: opacity, transform;
+    transition-duration: 267ms, 178ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .sideMenuShow {
+    @include sideMenu;
+    z-index: 10;
+    opacity: 1;
+    transform: none;
+    transition-property: opacity, transform;
+    transition-duration: 267ms, 178ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
 }
 
 .home {
@@ -121,6 +126,16 @@
   display: flex;
   justify-content: space-between;
   padding: 50px 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .intro {
+    flex-direction: column-reverse;
+    justify-content: unset;
+    padding-top: 0;
+    align-items: center;
+    vertical-align: middle;
+  }
 }
 
 .footer {
@@ -157,6 +172,6 @@
     font-size: 1rem;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid hsla(0, 0, 47.1%, 0.7);
+    border-top: 1px solid rgba(121, 121, 121, 0.7);
   }
 }

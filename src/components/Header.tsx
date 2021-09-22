@@ -28,6 +28,7 @@ export default function Header() {
     { href: '/', text: '主页' },
     { href: 'https://juejin.cn/user/2875978150314408/posts', text: '技术文章' },
     { href: 'https://github.com/EagleClark', text: 'Github' },
+    { href: 'https://gitee.com/eagleye', text: 'Gitee' },
     { href: 'mailto:eagleclark@163.com', text: '联系我' },
   ];
 

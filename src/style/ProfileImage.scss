@@ -141,3 +141,14 @@
     }
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .profileImage {
+    transform-origin: center;
+    height: 650px;
+    --winWidth: 0.55;
+    transform: scale(var(--winWidth));
+    right: 0;
+    place-items: baseline center;
+  }
+}

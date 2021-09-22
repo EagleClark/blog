@@ -11,6 +11,9 @@ export default function Footer() {
           <a href="https://github.com/EagleClark" target="_blank" rel="noreferrer">
             <img src="./assets/svg/github.svg" alt="Github" />
           </a>
+          <a href="https://gitee.com/eagleye" target="_blank" rel="noreferrer">
+            <img src="./assets/svg/gitee.svg" alt="Gitee" />
+          </a>
           <a href="https://codesandbox.io/u/EagleClark" target="_blank" rel="noreferrer">
             <img src="./assets/svg/codesandbox.svg" alt="CodeSandbox" />
           </a>

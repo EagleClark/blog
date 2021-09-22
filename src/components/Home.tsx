@@ -1,11 +1,11 @@
-import Intro from "./Intro";
+import IntroCard from "./IntroCard";
 import ProfileImage from "./ProfileImage";
 
 export default function Home() {
   return (
     <div className="home">
       <div className="intro">
-        <Intro />
+        <IntroCard />
         <ProfileImage />
       </div>
     </div>
