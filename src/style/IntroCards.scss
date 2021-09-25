@@ -1,0 +1,132 @@
+.introCards {
+  margin: 50px 80px;
+  position: relative;
+  width: 40%;
+  max-height: 100vh;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1024px) {
+  .introCards {
+    width: 98%;
+    min-height: 400px;
+    margin: 0;
+    transform-origin: left center;
+    transform: scale(.65);
+    align-self: flex-end;
+  }
+}
+
+@mixin introCard {
+  position: absolute;
+  transform-origin: bottom right;
+  transform: rotate(6deg);
+  opacity: 0;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 13px;
+  min-width: 560px;
+  width: 90%;
+  max-width: 650px;
+  min-height: 360px;
+  background: #2a2a32;
+  border-radius: 10px;
+  box-shadow: 4px 4px 20px 5px rgba(0,0,0,.3);
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.introCard {
+  @include introCard;
+}
+
+.frontCard {
+  @include introCard;
+  transform: rotate(0deg);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.followedCard {
+  @include introCard;
+  opacity: 0.5;
+  transform-origin: bottom right;
+  transform: rotate(5deg);
+  box-shadow: none;
+  z-index: 8;
+  height: 360px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fallCard {
+  @include introCard;
+  transform-origin: bottom right;
+  box-shadow: none;
+  z-index: 12;
+  animation: falldown 1s ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes falldown {
+  0%{
+    opacity: 1;
+    transform: rotateZ(0);
+  }
+
+  70%{
+    opacity: 0.5;
+  }
+
+  90%{
+    opacity: 0;
+    transform: rotateZ(-90deg) scale(0.9);
+  }
+
+  100%{
+    opacity: 0;
+    transform: rotateZ(-90deg) scale(0);
+  }
+}
+
+.circles {
+  display: flex;
+}
+
+@mixin navCircle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+.navCircleRed {
+  @include navCircle;
+  background: #ed4040;
+}
+
+.navCircleYellow {
+  @include navCircle;
+  background: #ecb62c;
+}
+.navCircleGreen {
+  @include navCircle;
+  background: #26e05a;
+}
+
+.procode {
+  margin-top: 20px;
+  font-size: 19.5px;
+  line-height: 25px;
+  color: #fefefe;
+}
+
+.CodeMirror-line {
+  overflow: visible;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}

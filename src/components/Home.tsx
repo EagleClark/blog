@@ -1,4 +1,4 @@
-import IntroCard from "./IntroCard";
+import IntroCard from "./IntroCards";
 import ProfileImage from "./ProfileImage";
 
 export default function Home() {
