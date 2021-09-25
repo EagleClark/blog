@@ -36,7 +36,7 @@ export default function Header() {
     <div className="header">
       <div className="headerContainer">
         <div className="logo">
-          <span><a href="/">Eagle Ye</a></span>
+          <span><a href="/">Eagle Clark</a></span>
         </div>
         <div className="headNav">
           <div className="navList">
