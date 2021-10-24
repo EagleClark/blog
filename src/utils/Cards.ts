@@ -1,25 +1,19 @@
-import { CARD_POS } from "./Constant";
-
-interface CardInfo {
-  name: string;
-  cardInfo: any;
-  position: CARD_POS;
-}
+import { CARD_POS, CardInfo, ICardsInfo } from "./Constant";
 
 class Card {
   name: string;
-  cardInfo: object;
+  cardInfo: CardInfo;
   position: CARD_POS;
   next: Card | null;
 
-  constructor(name: string, cardInfo: object, position: CARD_POS) {
+  constructor(name: string, cardInfo: CardInfo, position: CARD_POS) {
     this.name = name;
     this.cardInfo = cardInfo;
     this.position = position;
     this.next = null;
   }
 
-  getCradInfo(): CardInfo {
+  getCradInfo(): ICardsInfo {
     return {
       name: this.name,
       cardInfo: this.cardInfo,
@@ -32,11 +26,11 @@ export default class Cards {
   card: Card = new Card('', {}, CARD_POS.WAIT);
   size: number = 0;
 
-  constructor(cardsInfo: CardInfo[]) {
+  constructor(cardsInfo: ICardsInfo[]) {
     this.init(cardsInfo);
   }
 
-  private init(cardsInfo: CardInfo[]) {
+  private init(cardsInfo: ICardsInfo[]) {
     let currentCard = null;
     let lastCard = null;
     for (let i = 0; i < cardsInfo.length; i++) {
@@ -59,8 +53,8 @@ export default class Cards {
     }
   }
 
-  getCardsInfo(): CardInfo[] {
-    const res: CardInfo[] = [this.card.getCradInfo()];
+  getCardsInfo(): ICardsInfo[] {
+    const res: ICardsInfo[] = [this.card.getCradInfo()];
     let currentCard = this.card.next;
 
     if (currentCard) {
