@@ -10,8 +10,8 @@ export default function ProfileImage() {
         <img className="planetCircle" src="./assets/png/sql.png" alt="" />
       </div>
       <div className="outerCircle">
-        <img className="planetCircle" src="./assets/png/webpack.png" alt="" />
-        <img className="planetCircle" src="./assets/png/cordova.png" alt="" />
+        <img className="planetCircle" src="./assets/png/rust.png" alt="" />
+        <img className="planetCircle" src="./assets/png/angular.png" alt="" />
         <img className="planetCircle" src="./assets/png/react.png" alt="" />
         <img className="planetCircle" src="./assets/png/nodejs.png" alt="" />
         <img className="planetCircle" src="./assets/png/typescript.png" alt="" />
