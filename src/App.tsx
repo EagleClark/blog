@@ -1,16 +1,14 @@
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Home from './components/Home';
-import './style/App.scss';
+import './App.less'
 
 function App() {
+
   return (
-    <div className="app">
-      <Header />
-      <Home />
-      <Footer />
+    <div className="App">
+      <div className="test">
+
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
