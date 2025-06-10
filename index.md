@@ -4,14 +4,17 @@ layout: home
 
 hero:
   name: "Eagle Clark"
-  text: "Eagle Clark's blog."
-  tagline: My great project tagline
+  text: "大前端工程师"
+  tagline: 一个技术分享小站
   actions:
     - theme: brand
       text: Markdown Examples
       link: /markdown-examples
     - theme: alt
       text: API Examples
+      link: /api-examples
+    - theme: alt
+      text: API Examples1
       link: /api-examples
 
 features:
