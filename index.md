@@ -18,11 +18,29 @@ hero:
       link: /api-examples
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 前端通用技能
+    details: 前端领域的基础以及进阶技能
+    link: /api-examples
+    icon: 🛠️
+  - title: 前端框架
+    details: React、Vue、Angular 等主流前端框架及周边的使用之道
+    link: /api-examples
+    icon: ⚛️
+  - title: 走向全栈
+    details: 从前端走向全栈
+    link: /api-examples
+    icon: 🚀
+  - title: 数据结构与算法
+    details: JavaScript版数据结构与算法
+    link: /api-examples
+    icon: 📊
+  - title: 设计模式
+    details: JavaScript版设计模式
+    link: /api-examples
+    icon: 🏗️
+  - title: AI
+    details: AI技术的使用与探索
+    link: /api-examples
+    icon: 🤖
 ---
 
