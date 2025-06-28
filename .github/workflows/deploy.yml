@@ -41,11 +41,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install # 使用 pnpm 安装依赖
       - name: Build with VitePress
-        run: pnpm run docs:build # 使用 pnpm 运行构建
+        run: pnpm docs:build # 使用 pnpm 运行构建
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .vitepress/dist # 打包之后产物的文件夹
+          path: docs/.vitepress/dist # 打包之后产物的文件夹
 
   # 部署工作
   deploy:

@@ -6,7 +6,7 @@ export default defineConfig({
   description: "Eagle Clark's blog.",
   lastUpdated: true,
   head: [
-    ['link', { rel: 'icon', href: '/blog/favicon.png' }],
+    ['link', { rel: 'icon', href: '/favicon.png' }],
   ],
   themeConfig: {
     
