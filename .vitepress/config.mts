@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/blog',
   title: "Eagle Clark",
   description: "Eagle Clark's blog.",
   lastUpdated: true,
