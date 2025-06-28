@@ -105,7 +105,7 @@ Ollama 提供了两套 API，一套是他自己的 API，另一套是兼容 Open
 
 [官方文档](https://github.com/ollama/ollama/blob/main/docs/api.md)
 
-Ollama 的默认端口是 11434，直接访问 http://localhost:11434 就会看到 `Ollama is running`。
+Ollama 的默认端口是 11434，直接访问 `http://localhost:11434` 就会看到 `Ollama is running`。
 
 这个默认端口是可以修改的，修改方法如下：
 

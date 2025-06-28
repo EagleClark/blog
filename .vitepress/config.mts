@@ -63,6 +63,15 @@ export default defineConfig({
       level: [1, 2],
       label: '页面导航'
     },
+
+    docFooter: {
+      prev: '上一页',
+      next: '下一页'
+    },
+
+    lastUpdated: {
+      text: '最后更新于'
+    },
   },
   // locales: {
   //   root: {
