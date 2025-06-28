@@ -14,6 +14,15 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首页', link: '/' },
+      {
+        text: "技术文章",
+        items: [
+          { text: "我的掘金", link: "https://juejin.cn/user/2875978150314408/columns" },
+          { text: "走向全栈", link: "/article/full-stack/SSE/" },
+          { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
+        ],
+      },
+      { text: '关于我', link: '/about' },
     ],
 
     sidebar: {
@@ -48,14 +57,16 @@ export default defineConfig({
           text: 'AI',
           items: [
             { text: 'Ollama部署本地大模型', link: '/article/ai/Ollama部署本地大模型', },
-            { text: '快速搭建自己的RAG知识库', link: '/article/ai/快速搭建自己的RAG知识库/', }
+            { text: '快速搭建自己的RAG知识库', link: '/article/ai/快速搭建自己的RAG知识库/', },
+            { text: '提示词工程', link: '/article/ai/提示词工程', },
+            { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现Function call', },
           ]
         }
       ]
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/EagleClark' }
+      { icon: 'github', link: 'https://github.com/EagleClark/blog/tree/vitepress' }
     ],
 
     outline: {
@@ -71,6 +82,11 @@ export default defineConfig({
     lastUpdated: {
       text: '最后更新于'
     },
+
+    footer: {
+      message: '京ICP备18043750号',
+      copyright: 'Copyright © 2025-present Eagle Clark'
+    }
   },
   // locales: {
   //   root: {
