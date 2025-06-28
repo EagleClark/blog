@@ -5,11 +5,16 @@ export default defineConfig({
   base: '/blog',
   title: "Eagle Clark",
   description: "Eagle Clark's blog.",
+  lastUpdated: true,
+  head: [
+    ['link', { rel: 'icon', href: '/blog/favicon.png' }],
+  ],
   themeConfig: {
+    
+    logo: { src: '/favicon.png', width: 24, height: 24 },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: '首页', link: '/' },
     ],
 
     sidebar: {
@@ -51,7 +56,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/EagleClark' }
     ],
 
     outline: {
@@ -59,16 +64,16 @@ export default defineConfig({
       label: '页面导航'
     },
   },
-  locales: {
-    root: {
-      label: '中文',
-      lang: 'zh-CN',
-      link: '/'
-    },
-    en: {
-      label: 'English',
-      lang: 'en-US',
-      link: '/en/'
-    }
-  }
+  // locales: {
+  //   root: {
+  //     label: '中文',
+  //     lang: 'zh-CN',
+  //     link: '/'
+  //   },
+  //   en: {
+  //     label: 'English',
+  //     lang: 'en-US',
+  //     link: '/en/'
+  //   }
+  // }
 })

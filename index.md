@@ -6,10 +6,14 @@ hero:
   name: "Eagle Clark"
   text: "大前端工程师"
   tagline: 一个技术分享小站
+  image:
+    light: /light.webp
+    dark: /dark.webp
+    alt: Eagle Clark
   actions:
     - theme: brand
-      text: 关于作者
-      link: ./
+      text: 关于我
+      link: /about
     - theme: alt
       text: 我的掘金
       link: https://juejin.cn/user/2875978150314408/columns
