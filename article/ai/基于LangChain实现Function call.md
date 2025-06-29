@@ -1,6 +1,10 @@
-# 什么是 LangChain
+# 基于LangChain实现Function call
 
-## 简介
+> 首发于：2025-03-26
+
+## 什么是 LangChain
+
+### 简介
 
 [LangChain](https://www.langchain.com/) 是一个基于大语言模型（LLM）开发应用程序的框架。
 
@@ -14,7 +18,7 @@ LangChain 是核心框架，构建基础应用用 LangChain 即可，而 LangGra
 
 本文主要侧重讲 LangChain。
 
-## 安装及基础使用
+### 安装及基础使用
 
 直接使用
 
@@ -185,7 +189,7 @@ for token in llm.stream(messages):
 
 
 
-## 与OpenAI 提供的 API 工具包对比
+### 与OpenAI 提供的 API 工具包对比
 
 其实 LangChain 的很多功能 [OpenAI 提供的 API 工具包](https://platform.openai.com/docs/overview)也能实现，比如下面这段代码：
 
@@ -214,9 +218,9 @@ console.log(completion.choices[0].message.content);
 - **OpenAI API**：直接调用 OpenAI 的模型，返回生成结果（如文本生成、图片生成等），属于低层级工具。
 - **LangChain**：通过模块化组件（Agents、Chains、Memory等），将模型能力与外部工具（如搜索引擎、数据库、API）、业务流程结合，构建端到端应用。
 
-# 什么是 Function calling
+## 什么是 Function calling
 
-## 简介
+### 简介
 
 Function calling 也叫 Tool Calling 提供了一种自然语言模型与系统（数据库或API）交互的通道。下图是一个例子：
 
@@ -229,7 +233,7 @@ Function calling 也叫 Tool Calling 提供了一种自然语言模型与系统�
 
 大模型擅长推理，并且大模型的训练数据通常是半年前甚至更早的，所以大模型在面对一些问题的时候可能就会显得束手无策，比如，我们下面要解决的天气问题，大模型的训练数据是肯定不可能包含有当前的天气数据的，所以想要问大模型这类问题时我们就需要借用 Function calling 的能力。
 
-## 一个极简的 Function Calling 示例
+### 一个极简的 Function Calling 示例
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -275,7 +279,7 @@ else:
     print("I don't know how to do that")
 ```
 
-# 实现大模型获取天气数据
+## 实现大模型获取天气数据
 
 有了上面的例子其实这个实例就很好实现了，这里我准备使用[心知天气](https://www.seniverse.com/)来获取天气数据。
 

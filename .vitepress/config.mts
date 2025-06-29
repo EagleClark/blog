@@ -18,6 +18,7 @@ export default defineConfig({
         text: "技术文章",
         items: [
           { text: "我的掘金", link: "https://juejin.cn/user/2875978150314408/columns" },
+          { text: "前端框架", link: "/article/front-end-framework/Vue3开发实践的其中一种范式" },
           { text: "走向全栈", link: "/article/full-stack/SSE/" },
           { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
         ],
@@ -37,10 +38,9 @@ export default defineConfig({
       ],
       '/article/front-end-framework': [
         {
-          text: 'Examples',
+          text: '前端框架',
           items: [
-            { text: 'test', link: './test' },
-            { text: 'test1', link: './test1' }
+            { text: 'Vue3开发实践的其中一种范式', link: '/article/front-end-framework/Vue3开发实践的其中一种范式' },
           ]
         }
       ],
@@ -70,7 +70,7 @@ export default defineConfig({
     ],
 
     outline: {
-      level: [1, 2],
+      level: [2, 3],
       label: '页面导航'
     },
 

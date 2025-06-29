@@ -1,4 +1,8 @@
-# RAG 简介
+# 快速搭建自己的RAG知识库
+
+> 首发于：2025-03-09
+
+## RAG 简介
 
 先解释一下字面意思：RAG Retrieal-Augmented Generation 检索增强生成。
 
@@ -11,7 +15,7 @@ RAG 工作的大致流程：
 3. 存储到向量数据库（可以作为AI的长期记忆库）。
 4. 向量数据库检索的信息将被作为 Context，结合用户的输入生成提示词喂给 LLM。
 
-# 量化工具
+## 量化工具
 
 要搭建 RAG 知识库首先我们需要找到一个合适的量化工具，把我们的“知识”做量化处理，否则大模型是无法理解这些“知识”的。
 
@@ -25,7 +29,7 @@ RAG 工作的大致流程：
 ollama pull nomic-embed-text
 ```
 
-# Page Assist
+## Page Assist
 
 [Page Assist](https://chromewebstore.google.com/detail/page-assist-a-web-ui-for/jfgfiigpkhlkbnfnbobbkinehhfdhndo) 是一个谷歌浏览器的插件，直接提供 Web UI 页面可以访问我们的本地大模型。
 
@@ -61,7 +65,7 @@ ollama pull nomic-embed-text
 
 ![image-20250309173538493](./image/image-20250309173538493.png)
 
-# Anything LLM
+## Anything LLM
 
 [Anything LLM](https://anythingllm.com/) 也是一个开箱即用的AI工具，是一个桌面端的应用，比前面介绍的 Page Assist 要更加强大。
 

@@ -1,4 +1,8 @@
-# 前言
+# Ollama部署本地大模型
+
+> 首发于：2025-03-08
+
+## 前言
 
 > 笔者本人PC的系统为windows 11，以下操作均是基于该系统。
 >
@@ -6,7 +10,7 @@
 >
 > 部分内容由 AI 生成
 
-# 简介
+## 简介
 
 Ollama 本质就是开箱即用的大模型部署工具，我们可以利用他来部署各种大模型，操作简单方便。
 
@@ -23,9 +27,9 @@ Ollama 如同 Docker 将应用打包成“集装箱”，Ollama 将大型语言�
 | HuggingFace TGI       | 工业级推理性能         | 生产环境部署     | ✅        | 需要GPU显存支撑 |
 | vLLM                  | Attention算法优化大师  | 学术研究基准测试 | ✅        | 极致显存优化    |
 
-# Ollama 安装步骤
+## Ollama 安装步骤
 
-## Step 1： 环境变量配置
+### Step 1： 环境变量配置
 
 为了不装 C 盘，必须在安装 Ollama 之前配置好环境变量。
 
@@ -38,7 +42,7 @@ OLLAMA_MODELS
 D:\ollama
 ```
 
-## Step 2：下载并安装
+### Step 2：下载并安装
 
 去 [Ollama 官网](https://ollama.com/) 直接下载与系统匹配的安装包。同样放入 `D:\ollama`，然后执行下面的命令：
 
@@ -60,7 +64,7 @@ ollama -v
 ollama -h
 ```
 
-## Step 3:  下载并运行模型
+### Step 3:  下载并运行模型
 
 进入 [Ollama 的 Models 页面](https://ollama.com/search)，选择你想部署的大模型，比如：我想部署 [deepseek](https://ollama.com/library/deepseek-r1)，那么我就找到并选择想要的模型规模，我选择的是7b。我可以使用以下命令去下载和运行该模型。
 
@@ -75,15 +79,15 @@ ollama run deepseek-r1:7b
 
 对话可以通过 `Ctrl+D` 或者输入 `/bye` 退出，再次执行运行命令可以重新进入窗口对话。
 
-# Open Webui 安装步骤
+## Open Webui 安装步骤
 
 前面我们安装了 Ollama，但是目前只能是在命令行中去交互，这看上去就很不界面友好，所以我们可以安装一个 Ollama 配套的 Web 客户端，也就是 Open Webui。我用的是 docker 的方式安装。
 
-## Step 1：安装Docker
+### Step 1：安装Docker
 
 如果已经有 Docker 了，可以跳过这一步，如果没有直接 [docker 官网](https://docs.docker.com/desktop/setup/install/windows-install/)下载安装包，几乎都是傻瓜式安装，略过。
 
-## Step 2：安装 Open Webui
+### Step 2：安装 Open Webui
 
 直接运行如下命令就可以下载并运行了，下面的 3000 是我映射到我主机的端口，这个可以根据自己电脑的情况来配置。
 
@@ -95,13 +99,13 @@ docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-
 
 如果不想安装 Open Webui 也可以安装一个 [Cherry Studio](https://cherry-ai.com/)、[Page Assist](https://github.com/n4ze3m/page-assist)、[Anything LLM](https://anythingllm.com/)这样的工具来连接我们本地的 Ollama。
 
-# Ollama API
+## Ollama API
 
 除了使用一些第三方提供的客户端，也可以使用 Ollama 的 API 去访问他，也可以去开发一些相关的应用。
 
 Ollama 提供了两套 API，一套是他自己的 API，另一套是兼容 Open AI 标准的 API。
 
-## Ollama 自己的API
+### Ollama 自己的API
 
 [官方文档](https://github.com/ollama/ollama/blob/main/docs/api.md)
 
@@ -118,7 +122,7 @@ OLLAMA_HOST
 
 然后重启 ollama 的服务即可。
 
-## 兼容的 Open AI 的 API
+### 兼容的 Open AI 的 API
 
 [官方文档](https://github.com/ollama/ollama/blob/main/docs/openai.md)
 
