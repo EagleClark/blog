@@ -18,6 +18,7 @@ export default defineConfig({
         text: "技术文章",
         items: [
           { text: "我的掘金", link: "https://juejin.cn/user/2875978150314408/columns" },
+          { text: "前端核心基础", link: "/article/front-end/JavaScript模块化" },
           { text: "前端框架", link: "/article/front-end-framework/Vue3开发实践的其中一种范式" },
           { text: "走向全栈", link: "/article/full-stack/SSE/" },
           { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
@@ -31,7 +32,9 @@ export default defineConfig({
         {
           text: '前端核心基础',
           items: [
-            { text: 'JavaScript模块化那些事儿', link: '/article/front-end/JavaScript模块化那些事儿' },
+            { text: 'JavaScript模块化', link: '/article/front-end/JavaScript模块化' },
+            { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
+            { text: '微前端', link: '/article/front-end/微前端' },
           ]
         }
       ],
@@ -48,6 +51,7 @@ export default defineConfig({
           text: '走向全栈',
           items: [
             { text: 'SSE', link: '/article/full-stack/SSE/' },
+            { text: 'GraphQL', link: '/article/full-stack/graphql/', },
           ]
         }
       ],

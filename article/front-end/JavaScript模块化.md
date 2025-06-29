@@ -1,4 +1,4 @@
-# JavaScript模块化那些事儿
+# JavaScript模块化
 
 > 首发于：2023-05-28
 
