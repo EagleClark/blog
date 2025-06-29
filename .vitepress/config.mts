@@ -31,8 +31,7 @@ export default defineConfig({
         {
           text: '前端核心基础',
           items: [
-            { text: 'test', link: './test' },
-            { text: 'test1', link: './test1' }
+            { text: 'JavaScript模块化那些事儿', link: '/article/front-end/JavaScript模块化那些事儿' },
           ]
         }
       ],
@@ -69,6 +68,27 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/EagleClark/blog/tree/vitepress' }
     ],
 
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: '搜索文档',
+            buttonAriaLabel: '搜索文档'
+          },
+          modal: {
+            noResultsText: '无法找到相关结果',
+            resetButtonTitle: '清除查询条件',
+            footer: {
+              selectText: '选择',
+              navigateText: '切换',
+              closeText: '关闭'
+            }
+          }
+        }
+      }
+    },
+
     outline: {
       level: [2, 3],
       label: '页面导航'
@@ -86,18 +106,29 @@ export default defineConfig({
     footer: {
       message: '京ICP备18043750号',
       copyright: 'Copyright © 2025-present Eagle Clark'
-    }
+    },
+
+    notFound: {
+      title: '页面未找到',
+      quote:
+        '但如果你不改变方向，并且继续寻找，你可能最终会到达你所前往的地方。',
+      linkLabel: '前往首页',
+      linkText: '带我回首页'
+    },
+
+    langMenuLabel: '多语言',
+    returnToTopLabel: '回到顶部',
+    sidebarMenuLabel: '菜单',
+    darkModeSwitchLabel: '主题',
+    lightModeSwitchTitle: '切换到浅色模式',
+    darkModeSwitchTitle: '切换到深色模式',
+    skipToContentLabel: '跳转到内容'
   },
-  // locales: {
-  //   root: {
-  //     label: '中文',
-  //     lang: 'zh-CN',
-  //     link: '/'
-  //   },
-  //   en: {
-  //     label: 'English',
-  //     lang: 'en-US',
-  //     link: '/en/'
-  //   }
-  // }
+  locales: {
+    root: {
+      label: '中文',
+      lang: 'zh-CN',
+      link: '/'
+    },
+  }
 })

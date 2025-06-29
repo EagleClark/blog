@@ -19,12 +19,12 @@ hero:
       link: https://juejin.cn/user/2875978150314408/columns
 
 features:
-  # - title: 前端核心基础
-  #   details: 前端领域的核心基础以及进阶技能
-  #   link: /article/front-end/test
-  #   icon: 🛠️
+  - title: 前端核心基础
+    details: 前端领域的核心基础以及进阶技能
+    link: /article/front-end/JavaScript模块化那些事儿
+    icon: 🛠️
   - title: 前端框架
-    details: React、Vue、Angular 等主流前端框架及周边的使用之道
+    details: React、Vue、Angular 等主流前端框架及周边的原理以及使用之道
     link: /article/front-end-framework/Vue3开发实践的其中一种范式
     icon: ⚛️
   - title: 走向全栈
@@ -45,3 +45,5 @@ features:
     icon: 🤖
 ---
 
+<confetti />
+<VisitorPanel />
