@@ -31,14 +31,14 @@ features:
     details: 从前端走向全栈
     link: /article/full-stack/SSE
     icon: 🚀
-  # - title: 数据结构与算法
-  #   details: JavaScript版数据结构与算法
-  #   link: /article/front-end/data-structures-and-algorithms
-  #   icon: 📊
-  # - title: 设计模式
-  #   details: JavaScript版设计模式
-  #   link: /article/front-end/design-pattern
-  #   icon: 🏗️
+  - title: 数据结构与算法
+    details: JavaScript版数据结构与算法
+    link: /article/data-structures-and-algorithms/复杂度分析
+    icon: 📊
+  - title: 设计模式
+    details: JavaScript版设计模式
+    link: /article/design-patterns/设计原则
+    icon: 🏗️
   - title: AI
     details: AI技术的使用与探索
     link: /article/ai/Ollama部署本地大模型

@@ -55,6 +55,24 @@ export default defineConfig({
           ]
         }
       ],
+      '/article/data-structures-and-algorithms': [
+        {
+          text: '数据结构与算法',
+          items: [
+            { text: '复杂度分析', link: '/article/data-structures-and-algorithms/复杂度分析', },
+            { text: '栈', link: '/article/data-structures-and-algorithms/栈', },
+            { text: '队列', link: '/article/data-structures-and-algorithms/队列', },
+          ]
+        }
+      ],
+      '/article/design-patterns': [
+        {
+          text: '设计模式',
+          items: [
+            { text: '设计原则', link: '/article/design-patterns/设计原则/', },
+          ]
+        }
+      ],
       '/article/ai/': [
         {
           text: 'AI',

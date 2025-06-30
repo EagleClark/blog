@@ -22,8 +22,10 @@
 
 - 其他 🛠️：Git、Vite、Docker、Nginx、VSCode插件开发等
 
-# 联系方式
+# Follow Me
 
-- Github：[https://github.com/EagleClark](https://github.com/EagleClark)
-- 掘金：[https://juejin.cn/user/2875978150314408](https://juejin.cn/user/2875978150314408)
+- [Github](https://github.com/EagleClark)
+- [掘金](https://juejin.cn/user/2875978150314408)
+- [Gitee](https://gitee.com/eagleye)
+- [Codesandbox](https://codesandbox.io/u/EagleClark)
 - 邮箱：eagleclark@163.com
