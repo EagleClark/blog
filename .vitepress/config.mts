@@ -21,6 +21,8 @@ export default defineConfig({
           { text: "前端核心基础", link: "/article/front-end/JavaScript模块化" },
           { text: "前端框架", link: "/article/front-end-framework/Vue3开发实践的其中一种范式" },
           { text: "走向全栈", link: "/article/full-stack/SSE/" },
+          { text: "数据结构与算法", link: "/article/data-structures-and-algorithms/复杂度分析" },
+          { text: "设计模式", link: "/article/design-patterns/设计原则/" },
           { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
         ],
       },
