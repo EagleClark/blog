@@ -32,9 +32,17 @@ export default defineConfig({
     sidebar: {
       '/article/front-end/': [
         {
-          text: '前端核心基础',
+          text: 'JS/TS',
           items: [
             { text: 'JavaScript模块化', link: '/article/front-end/JavaScript模块化' },
+            { text: 'TypeScript基础', link: '/article/front-end/TypeScript基础' },
+            { text: 'TypeScript进阶', link: '/article/front-end/TypeScript进阶' },
+            { text: 'TypeScript类型体操', link: '/article/front-end/TypeScript类型体操' },
+          ]
+        },
+        {
+          text: '进阶',
+          items: [
             { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
             { text: '微前端', link: '/article/front-end/微前端' },
           ]
