@@ -11,6 +11,11 @@ export default defineConfig({
   vite: {
     assetsInclude: ['**/*.image']
   },
+  markdown: {
+    image: {
+      lazyLoading: true,
+    }
+  },
   themeConfig: {
     
     logo: { src: '/favicon.png', width: 24, height: 24 },
