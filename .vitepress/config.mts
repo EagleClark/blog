@@ -72,6 +72,14 @@ export default defineConfig({
             { text: '复杂度分析', link: '/article/data-structures-and-algorithms/复杂度分析', },
             { text: '栈', link: '/article/data-structures-and-algorithms/栈', },
             { text: '队列', link: '/article/data-structures-and-algorithms/队列', },
+            { text: '链表', link: '/article/data-structures-and-algorithms/链表', },
+            { text: '跳表', link: '/article/data-structures-and-algorithms/跳表/', },
+            { text: '散列表', link: '/article/data-structures-and-algorithms/散列表', },
+            { text: '二叉树', link: '/article/data-structures-and-algorithms/二叉树/', },
+            { text: '堆', link: '/article/data-structures-and-algorithms/堆/', },
+            { text: '二分查找', link: '/article/data-structures-and-algorithms/二分查找', },
+            { text: '排序', link: '/article/data-structures-and-algorithms/排序/', },
+            { text: '0-1背包问题', link: '/article/data-structures-and-algorithms/0-1背包问题', },
           ]
         }
       ],
