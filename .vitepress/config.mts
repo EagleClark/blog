@@ -9,7 +9,7 @@ export default defineConfig({
     ['link', { rel: 'icon', href: '/favicon.png' }],
   ],
   vite: {
-    assetsInclude: ['**/*.image']
+    assetsInclude: ['**/*.image', '**/*.awebp'],
   },
   markdown: {
     image: {
@@ -51,6 +51,7 @@ export default defineConfig({
         {
           text: '进阶',
           items: [
+            { text: 'HTTPS到底是如何保障我们的安全的', link: '/article/front-end/HTTPS到底是如何保障我们的安全的/' },
             { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
             { text: '微前端', link: '/article/front-end/微前端' },
           ]
