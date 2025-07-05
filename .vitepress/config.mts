@@ -63,6 +63,8 @@ export default defineConfig({
           text: '前端框架',
           items: [
             { text: 'Vue3开发实践的其中一种范式', link: '/article/front-end-framework/Vue3开发实践的其中一种范式' },
+            { text: 'Vue2数据双向绑定原理', link: '/article/front-end-framework/Vue2数据双向绑定原理/' },
+            { text: 'Angular基础', link: '/article/front-end-framework/Angular基础/', },
           ]
         }
       ],
