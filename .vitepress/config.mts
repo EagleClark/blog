@@ -71,6 +71,8 @@ export default defineConfig({
           items: [
             { text: 'SSE', link: '/article/full-stack/SSE/' },
             { text: 'GraphQL', link: '/article/full-stack/graphql/', },
+            { text: 'Docker', link: '/article/full-stack/docker/', },
+            { text: 'Redis基础', link: '/article/full-stack/redis/', },
           ]
         }
       ],
