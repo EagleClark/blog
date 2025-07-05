@@ -5,6 +5,7 @@ export default defineConfig({
   title: "Eagle Clark",
   description: "Eagle Clark's blog.",
   lastUpdated: true,
+  ignoreDeadLinks: true,
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }],
   ],
