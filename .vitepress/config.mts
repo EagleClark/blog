@@ -76,6 +76,8 @@ export default defineConfig({
             { text: 'GraphQL', link: '/article/full-stack/graphql/', },
             { text: 'Docker', link: '/article/full-stack/docker/', },
             { text: 'Redis基础', link: '/article/full-stack/redis/', },
+            { text: 'InfluxDB基础', link: '/article/full-stack/InfluxDB/', },
+            { text: 'Nginx——正向代理、反向代理', link: '/article/full-stack/nginx/', },
           ]
         }
       ],
