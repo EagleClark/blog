@@ -41,12 +41,20 @@ export default defineConfig({
     sidebar: {
       '/article/front-end/': [
         {
-          text: 'JS/TS',
+          text: '语言（JS/TS）',
           items: [
+            { text: 'Babel', link: '/article/front-end/Babel' },
             { text: 'JavaScript模块化', link: '/article/front-end/JavaScript模块化' },
             { text: 'TypeScript基础', link: '/article/front-end/TypeScript基础' },
             { text: 'TypeScript进阶', link: '/article/front-end/TypeScript进阶' },
             { text: 'TypeScript类型体操', link: '/article/front-end/TypeScript类型体操' },
+          ]
+        },
+        {
+          text: '基本功',
+          items: [
+            { text: '跨域', link: '/article/front-end/跨域/' },
+            { text: '前端测试', link: '/article/front-end/前端测试/' },
           ]
         },
         {
