@@ -42,6 +42,7 @@ export default defineConfig({
       '/article/front-end/': [
         {
           text: '语言（JS/TS）',
+          collapsed: true,
           items: [
             { text: 'Babel', link: '/article/front-end/Babel' },
             { text: 'JavaScript模块化', link: '/article/front-end/JavaScript模块化' },
@@ -52,6 +53,7 @@ export default defineConfig({
         },
         {
           text: '基本功',
+          collapsed: true,
           items: [
             { text: '跨域', link: '/article/front-end/跨域/' },
             { text: '前端测试', link: '/article/front-end/前端测试/' },
@@ -59,6 +61,7 @@ export default defineConfig({
         },
         {
           text: '进阶',
+          collapsed: true,
           items: [
             { text: 'HTTPS到底是如何保障我们的安全的', link: '/article/front-end/HTTPS到底是如何保障我们的安全的/' },
             { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
@@ -79,13 +82,20 @@ export default defineConfig({
       '/article/full-stack': [
         {
           text: '走向全栈',
+          collapsed: true,
           items: [
             { text: 'SSE', link: '/article/full-stack/SSE/' },
             { text: 'GraphQL', link: '/article/full-stack/graphql/', },
             { text: 'Docker', link: '/article/full-stack/docker/', },
+            { text: 'Nginx——正向代理、反向代理', link: '/article/full-stack/nginx/', },
+          ]
+        },
+        {
+          text: '数据库',
+          collapsed: true,
+          items: [
             { text: 'Redis基础', link: '/article/full-stack/redis/', },
             { text: 'InfluxDB基础', link: '/article/full-stack/InfluxDB/', },
-            { text: 'Nginx——正向代理、反向代理', link: '/article/full-stack/nginx/', },
           ]
         }
       ],
