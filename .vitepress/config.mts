@@ -56,6 +56,8 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: '跨域', link: '/article/front-end/跨域/' },
+            { text: '缓存', link: '/article/front-end/缓存/' },
+            { text: '浏览器安全基础', link: '/article/front-end/浏览器安全基础/' },
             { text: '前端测试', link: '/article/front-end/前端测试/' },
           ]
         },
@@ -183,7 +185,7 @@ export default defineConfig({
     },
 
     outline: {
-      level: [2, 3],
+      level: "deep",
       label: '页面导航'
     },
 
