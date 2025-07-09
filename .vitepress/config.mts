@@ -55,6 +55,7 @@ export default defineConfig({
           text: '基本功',
           collapsed: true,
           items: [
+            { text: 'Git基础', link: '/article/front-end/Git基础/' },
             { text: '跨域', link: '/article/front-end/跨域/' },
             { text: '缓存', link: '/article/front-end/缓存/' },
             { text: '浏览器安全基础', link: '/article/front-end/浏览器安全基础/' },

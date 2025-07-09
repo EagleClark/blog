@@ -20,7 +20,7 @@ hero:
 
 features:
   - title: 前端核心基础
-    details: 前端领域的核心基础以及进阶技能
+    details: 有计算机领域的通用技能，也有前端领域的核心基础以及进阶技能
     link: /article/front-end/Babel
     icon: 🛠️
   - title: 前端框架
