@@ -93,6 +93,7 @@ export default defineConfig({
             { text: 'SSE', link: '/article/full-stack/SSE/' },
             { text: 'GraphQL', link: '/article/full-stack/graphql/', },
             { text: '大文件上传', link: '/article/full-stack/大文件上传/', },
+            { text: '基于PeerJS实现屏幕分享', link: '/article/full-stack/基于PeerJS实现屏幕分享/', },
             { text: 'Docker', link: '/article/full-stack/docker/', },
             { text: 'Nginx——正向代理、反向代理', link: '/article/full-stack/nginx/', },
           ]
