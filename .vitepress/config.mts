@@ -69,6 +69,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: '超长列表渲染', link: '/article/front-end/超长列表渲染/' },
+            { text: '前端性能指标', link: '/article/front-end/前端性能指标/', },
             { text: 'HTTPS到底是如何保障我们的安全的', link: '/article/front-end/HTTPS到底是如何保障我们的安全的/' },
             { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
             { text: '微前端', link: '/article/front-end/微前端' },
