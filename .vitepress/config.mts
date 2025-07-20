@@ -35,6 +35,7 @@ export default defineConfig({
           { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
         ],
       },
+      { text: '杂七杂八', link: '/article/other/孙子兵法/01' },
       { text: '关于我', link: '/about' },
     ],
 
@@ -165,7 +166,22 @@ export default defineConfig({
             { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现Function call', },
           ]
         }
-      ]
+      ],
+      '/article/other/': [
+        {
+          text: '孙子兵法',
+          collapsed: true,
+          items: [
+            { text: '始计篇', link: '/article/other/孙子兵法/01', },
+          ]
+        },
+        {
+          text: '博弈论',
+          collapsed: true,
+          items: [
+          ]
+        },
+      ],
     },
 
     socialLinks: [

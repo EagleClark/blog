@@ -17,6 +17,9 @@ hero:
     - theme: alt
       text: 我的掘金
       link: https://juejin.cn/user/2875978150314408/columns
+    - theme: alt
+      text: 杂七杂八
+      link: /article/other/孙子兵法/01
 
 features:
   - title: 前端核心基础
