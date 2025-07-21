@@ -62,6 +62,7 @@ export default defineConfig({
             { text: '事件循环', link: '/article/front-end/事件循环/' },
             { text: '跨域', link: '/article/front-end/跨域/' },
             { text: '缓存', link: '/article/front-end/缓存/' },
+            { text: '路由', link: '/article/front-end/路由' },
             { text: '浏览器安全基础', link: '/article/front-end/浏览器安全基础/' },
             { text: '前端测试', link: '/article/front-end/前端测试/' },
           ]
@@ -173,6 +174,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: '始计篇', link: '/article/other/孙子兵法/01', },
+            // { text: '作战篇', link: '/article/other/孙子兵法/02', },
           ]
         },
         {
