@@ -174,7 +174,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: '始计篇', link: '/article/other/孙子兵法/01', },
-            // { text: '作战篇', link: '/article/other/孙子兵法/02', },
+            { text: '作战篇', link: '/article/other/孙子兵法/02', },
           ]
         },
         {
