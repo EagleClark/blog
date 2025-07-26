@@ -175,6 +175,17 @@ export default defineConfig({
           items: [
             { text: '始计篇', link: '/article/other/孙子兵法/01', },
             { text: '作战篇', link: '/article/other/孙子兵法/02', },
+            { text: '谋攻篇', link: '/article/other/孙子兵法/03', },
+            { text: '军形篇', link: '/article/other/孙子兵法/04', },
+            { text: '兵势篇', link: '/article/other/孙子兵法/05', },
+            { text: '虚实篇', link: '/article/other/孙子兵法/06', },
+            { text: '军争篇', link: '/article/other/孙子兵法/07', },
+            { text: '九变篇', link: '/article/other/孙子兵法/08', },
+            { text: '行军篇', link: '/article/other/孙子兵法/09', },
+            { text: '地形篇', link: '/article/other/孙子兵法/10', },
+            { text: '九地篇', link: '/article/other/孙子兵法/11', },
+            { text: '火攻篇', link: '/article/other/孙子兵法/12', },
+            { text: '用间篇', link: '/article/other/孙子兵法/13', },
           ]
         },
         {
