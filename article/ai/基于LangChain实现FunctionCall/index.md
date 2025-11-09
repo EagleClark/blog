@@ -224,7 +224,7 @@ console.log(completion.choices[0].message.content);
 
 Function calling 也叫 Tool Calling 提供了一种自然语言模型与系统（数据库或API）交互的通道。下图是一个例子：
 
-![Conceptual parts of tool calling](https://python.langchain.com/assets/images/tool_calling_components-bef9d2bcb9d3706c2fe58b57bf8ccb60.png)
+![Conceptual parts of tool calling](./image/image1.webp)
 
 1. 首先我们得有工具，这里的工具就是数据库和访问数据库的接口；
 2. 让上述工具与大模型建立一个绑定关系；

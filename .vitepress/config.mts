@@ -164,7 +164,8 @@ export default defineConfig({
             { text: 'Ollama部署本地大模型', link: '/article/ai/Ollama部署本地大模型', },
             { text: '快速搭建自己的RAG知识库', link: '/article/ai/快速搭建自己的RAG知识库/', },
             { text: '提示词工程', link: '/article/ai/提示词工程', },
-            { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现Function call', },
+            { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现FunctionCall', },
+            { text: 'MCP', link: '/article/ai/MCP', },
           ]
         }
       ],
