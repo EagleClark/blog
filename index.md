@@ -18,8 +18,11 @@ hero:
       text: 我的掘金
       link: https://juejin.cn/user/2875978150314408/columns
     - theme: alt
+      text: 大前端资源站
+      link: /article/fe-resource/UI库
+    - theme: alt
       text: 杂七杂八
-      link: /article/other/孙子兵法/01
+      link: /article/other/孙子兵法/01   
 
 features:
   - title: 前端核心基础

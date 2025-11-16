@@ -35,6 +35,7 @@ export default defineConfig({
           { text: "AI", link: "/article/ai/Ollama部署本地大模型" },
         ],
       },
+      { text: '大前端资源站', link: '/article/fe-resource/UI库' },
       { text: '杂七杂八', link: '/article/other/孙子兵法/01' },
       { text: '关于我', link: '/about' },
     ],
@@ -166,6 +167,14 @@ export default defineConfig({
             { text: '提示词工程', link: '/article/ai/提示词工程', },
             { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现FunctionCall', },
             { text: 'MCP', link: '/article/ai/MCP', },
+          ]
+        }
+      ],
+      '/article/fe-resource/': [
+        {
+          text: '大前端资源站',
+          items: [
+            { text: 'UI库', link: '/article/fe-resource/UI库', },
           ]
         }
       ],
