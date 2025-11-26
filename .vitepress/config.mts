@@ -8,6 +8,11 @@ export default defineConfig({
   ignoreDeadLinks: true,
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }],
+    ['script', {
+      async: 'async',
+      src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6610941345616868', // 请替换为你的广告客户端ID
+      crossorigin: 'anonymous'
+    }]
   ],
   vite: {
     assetsInclude: ['**/*.image', '**/*.awebp'],
