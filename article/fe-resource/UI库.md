@@ -1,3 +1,5 @@
+> 首发于：2025-11-17
+
 ## React生态
 
 ### 通用组件库
@@ -55,6 +57,8 @@
 ### Tailwind
 
 [shadcn/ui](https://ui.shadcn.com/)
+
+[shadcn/ui的主题生成器](https://tweakcn.com/)
 
 [DaisyUI](https://daisyui.com/)
 
@@ -233,3 +237,11 @@
 [Water.css](https://watercss.kognise.dev/)
 
 [NES.css——像素风](https://nostalgic-css.github.io/NES.css/)
+
+## 其他
+
+[Solid UI——基于Solid.js的组件库](https://www.solid-ui.com/)
+
+[Flowbite Svelte——基于Svelte的组件库](https://flowbite-svelte.com/)
+
+[Material UI Svelte——基于Svelte的组件库](https://materialui.svelte.js.cn/)
