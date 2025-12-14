@@ -180,6 +180,7 @@ export default defineConfig({
           text: '大前端资源站',
           items: [
             { text: 'UI库', link: '/article/fe-resource/UI库', },
+            { text: '样式', link: '/article/fe-resource/样式', },
             { text: '可视化（图表、3D、地理信息等）', link: '/article/fe-resource/可视化（图表、3D、地理信息等）', },
           ]
         }
