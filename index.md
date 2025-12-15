@@ -19,7 +19,7 @@ hero:
       link: https://juejin.cn/user/2875978150314408/columns
     - theme: alt
       text: 大前端资源站
-      link: /article/fe-resource/UI库
+      link: /article/fe-resource/前端框架
     - theme: alt
       text: 杂七杂八
       link: /article/other/孙子兵法/01   
