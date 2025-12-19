@@ -183,6 +183,7 @@ export default defineConfig({
             { text: 'UI库', link: '/article/fe-resource/UI库', },
             { text: '样式', link: '/article/fe-resource/样式', },
             { text: '可视化（图表、3D、地理信息等）', link: '/article/fe-resource/可视化（图表、3D、地理信息等）', },
+            { text: '服务端或全栈框架', link: '/article/fe-resource/服务端或全栈框架', },
           ]
         }
       ],
@@ -208,8 +209,16 @@ export default defineConfig({
         },
         {
           text: '博弈论',
-          collapsed: true,
+          collapsed: false,
           items: [
+            { text: '博弈论概述', link: '/article/other/博弈论/博弈论概述', },
+          ]
+        },
+        {
+          text: '茶文化',
+          collapsed: false,
+          items: [
+            { text: '茶的分类', link: '/article/other/茶文化/茶的分类', },
           ]
         },
       ],
