@@ -186,6 +186,7 @@ export default defineConfig({
             { text: '服务端或全栈框架', link: '/article/fe-resource/服务端或全栈框架', },
             { text: '客户端', link: '/article/fe-resource/客户端', },
             { text: '构建及规范工具', link: '/article/fe-resource/构建及规范工具', },
+            { text: '前端测试', link: '/article/fe-resource/前端测试', },
           ]
         }
       ],
