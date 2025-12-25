@@ -182,12 +182,13 @@ export default defineConfig({
             { text: '前端框架', link: '/article/fe-resource/前端框架', },
             { text: 'UI库', link: '/article/fe-resource/UI库', },
             { text: '样式', link: '/article/fe-resource/样式', },
-            { text: '可视化（图表、3D、地理信息等）', link: '/article/fe-resource/可视化（图表、3D、地理信息等）', },
+            { text: '可视化（图表、3D、GIS等）', link: '/article/fe-resource/可视化', },
             { text: '服务端或全栈框架', link: '/article/fe-resource/服务端或全栈框架', },
             { text: '客户端', link: '/article/fe-resource/客户端', },
             { text: '构建及规范工具', link: '/article/fe-resource/构建及规范工具', },
             { text: '前端测试', link: '/article/fe-resource/前端测试', },
             { text: '应用库或应用框架', link: '/article/fe-resource/应用库或应用框架', },
+            { text: '其它（学习资料、工具等）', link: '/article/fe-resource/其它', },
           ]
         }
       ],
