@@ -228,6 +228,8 @@
 
 [Bulma](https://bulma.io/)
 
+[CSS Master Class](https://cssmasterclass.io/)
+
 [Pico.css](https://picocss.com/)
 
 [Pure.css](https://purecss.io/)
