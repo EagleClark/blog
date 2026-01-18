@@ -217,6 +217,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '博弈论概述', link: '/article/other/博弈论/博弈论概述', },
+            { text: '非零和博弈', link: '/article/other/博弈论/非零和博弈', },
           ]
         },
         {
