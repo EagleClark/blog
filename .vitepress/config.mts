@@ -172,6 +172,7 @@ export default defineConfig({
             { text: '提示词工程', link: '/article/ai/提示词工程', },
             { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现FunctionCall', },
             { text: 'MCP', link: '/article/ai/MCP', },
+            { text: 'Agent Skills', link: '/article/ai/AgentSkills', },
           ]
         }
       ],
