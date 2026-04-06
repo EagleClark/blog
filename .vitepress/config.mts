@@ -174,6 +174,7 @@ export default defineConfig({
             { text: '基于LangChain实现Function call', link: '/article/ai/基于LangChain实现FunctionCall', },
             { text: 'MCP', link: '/article/ai/MCP', },
             { text: 'Agent Skills', link: '/article/ai/AgentSkills', },
+            { text: '从0到1 Vibe Coding 一个项目', link: '/article/ai/从0到1VibeCoding一个项目' },
           ]
         }
       ],
