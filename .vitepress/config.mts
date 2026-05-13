@@ -175,6 +175,7 @@ export default defineConfig({
             { text: 'MCP', link: '/article/ai/MCP', },
             { text: 'Agent Skills', link: '/article/ai/AgentSkills', },
             { text: '从0到1 Vibe Coding 一个项目的真实感受', link: '/article/ai/从0到1VibeCoding一个项目' },
+            { text: 'Claude Code使用技巧', link: '/article/ai/ClaudeCode使用技巧/' }
           ]
         }
       ],
