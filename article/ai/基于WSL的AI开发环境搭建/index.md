@@ -441,3 +441,73 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/head
 ![image3](./image/image3.png)
 
 有模型配正常配，没有就一路选 `No` 就行了。安装过程中，可以看到会自动安装 `bun`，修改 `opencode.jsonc` 的plugin配置、新增 `oh-my-openagent.json` 配置文件等。
+
+`oh-my-openagent.json` 里面有不同作用的agent使用什么模型的配置，如果前面一路选的 `No`，可以手动修改一下这个文件的配置，比如我的配置如下所示：
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "hephaestus": {
+      "model": "deepseek/deepseek-v4-pro"
+    },
+    "oracle": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "librarian": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "explore": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "multimodal-looker": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "prometheus": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "metis": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "momus": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "atlas": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "sisyphus-junior": {
+      "model": "deepseek/deepseek-v4-pro"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "ultrabrain": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "deep": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "artistry": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "quick": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "unspecified-low": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "unspecified-high": {
+      "model": "deepseek/deepseek-v4-flash"
+    },
+    "writing": {
+      "model": "deepseek/deepseek-v4-flash"
+    }
+  }
+}
+```
+
+退出，重新进入 opencode，如下图所示，说明安装成功了：
+
+![image6](./image/image6.png)
