@@ -177,6 +177,7 @@ export default defineConfig({
             { text: '从0到1 Vibe Coding 一个项目的真实感受', link: '/article/ai/从0到1VibeCoding一个项目' },
             { text: 'Claude Code使用技巧', link: '/article/ai/ClaudeCode使用技巧/' },
             { text: '基于WSL的AI开发环境搭建', link: '/article/ai/基于WSL的AI开发环境搭建/' },
+            { text: '我的AI工作流', link: '/article/ai/我的AI工作流/' },
           ]
         }
       ],
