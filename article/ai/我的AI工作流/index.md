@@ -1,4 +1,4 @@
-# Claude Code 使用技巧
+# 我的AI工作流
 
 > 首发于：2026-05-28
 
@@ -163,6 +163,63 @@ patterns, conventions, and recurring issues you discover.
 
 上面只是一个骨架示例，真正的威力在于给 Subagent 配上详细的 prompt、限制工具、指定模型、甚至让多个 Subagent 协作。
 
+### 关于Hooks
+
+当 Claude Code 编辑文件、完成任务或需要输入时自动运行 shell 命令。格式化代码、发送通知、验证命令并强制执行项目规则。
+
+Hooks 配置在 `settings.json` 中（个人级、项目级、模块级都支持），主要分为以下几类：
+
+**支持的事件类型（部分）**
+
+| 事件 | 触发时机 | 典型用途 |
+|------|---------|---------|
+| `PreToolUse` | 在任何 Edit 或 Write 工具调用之前运行脚本 | 校验参数、阻止危险操作 |
+| `PostToolUse` | 在任何 Edit 或 Write 工具调用之后运行脚本 | 日志记录、自动提交 |
+| `Notification` | Claude 发送通知时 | 桌面通知、声音提醒 |
+| `UserPromptSubmit` | 用户提交消息时 | 注入额外上下文 |
+| `Stop` | Claude 完成响应时 | 自动格式化、补充信息 |
+| `PreCompact` | 压缩上下文之前 | 环境检查、加载配置 |
+
+全部事件类型见[官方文档](https://code.claude.com/docs/zh-CN/hooks#hook-生命周期)。
+
+支持的匹配器（matcher）见[官方文档](https://code.claude.com/docs/zh-CN/hooks#匹配器模式)
+
+**配置示例**
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+上面这个配置做了两件事：
+1. 每次 `Edit` 或 `Write` 工具执行后（每次LLM改完代码），触发 hook（这里用了一个 npm 脚本去执行代码格式化）。
+2. 当Claude完成任务时，弹出桌面通知提醒你回来查看。
+
+
 至此，已经介绍完搭建我这套AI工作流所需要的所有基础知识，下面讲思路。
 
 ---
@@ -175,6 +232,7 @@ patterns, conventions, and recurring issues you discover.
 
 *   [探索 .claude 目录](https://code.claude.com/docs/zh-CN/claude-directory)
 *   [存储指令和记忆](https://code.claude.com/docs/zh-CN/memory)
+*   [使用 hooks 自动化](https://code.claude.com/docs/zh-CN/hooks-guide)
 *   [创建自定义 subagents](https://code.claude.com/docs/zh-CN/sub-agents#enable-persistent-memory)
 *   [Agent-teams](https://code.claude.com/docs/zh-CN/agent-teams)
 
