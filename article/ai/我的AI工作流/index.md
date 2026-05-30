@@ -238,6 +238,80 @@ Hooks 配置在 `settings.json` 中（个人级、项目级、模块级都支持
 
 ## 工作流实例
 
+我这里有个[周报项目](https://github.com/EagleClark/work-report-generator)，就是一个填任务生成周报，AI分析人力情况的一个小项目，不过麻雀虽小五脏俱全，登录、用户管理、表单、复杂表格、AI分析、数据库操作等应有尽有。
+
+我在这个项目开发过程中我就配置了一套AI工作流。
+
+### 全局规则
+
+首先是我本地的个人级配置（~/.claude/CALUDE.md），我直接配置的 [Karpathy的CLAUDE.md](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)，本质是一个AI工程纪律规范。这个配置也可以放项目级配置里面，不过我觉得很好用每个项目我都期望用，再增加了一些自我介绍和自己的工作风格等内容。
+
+```
+......
+上面的Karpathy的配置省略
+
+# 关于我
+
+- 称呼：Eagle
+- 角色：全栈工程师，但更擅长前端
+- 时区：Asia/Shanghai
+- 常用语言：中文、英文
+
+# 日常工作
+
+- 主要处理的任务类型：Web开发、学习笔记
+- 常用技术栈：React、Vue + TypeScript + Node.js
+- 偏好的包管理器：pnpm
+
+# 沟通风格
+
+- 用简洁、直接的方式回答，不要过度解释基础概念
+- 用中文回答，但技术术语保留英文
+- 如果有不确定的地方，不要猜测，直接问我
+
+# 代码偏好
+
+- 不管前端代码还是后端Node.JS代码优先使用 TypeScript
+- 每个函数必须有类型声明（TypeScript）
+- 写测试测试优先用 vitest、Playwright
+```
+
+### Subagent配置
+
+我给我的项目配置了8个subagent，可以到[代码仓](https://github.com/EagleClark/work-report-generator/tree/main/.claude/agents) 查看。这些subagent分别是管前后端开发、代码检视、测试用例检视、测试结果分析的，使用不同的模型，不同的权限，各自干各自擅长的事情。
+
+![image4](./image/image4.png)
+
+### Rules配置
+
+规则我配置了5个，可以到[代码仓](https://github.com/EagleClark/work-report-generator/tree/main/.claude/rules) 查看。有 API 开发设计的规则，有前后端代码的规则，有测试的规则，这些规则都有自己的作用域。最重要的还有工作流的规则（workflow.md），这个工作流规则就规定了我做各种任务的时候要怎么个流程来做，用什么SKILL，谁（哪个subagent）来做，哪些事情一定要做，哪些事情禁止做。
+
+![image5](./image/image5.png)
+
+### hooks配置
+
+我这个项目[hooks配置](https://github.com/EagleClark/work-report-generator/blob/main/.claude/settings.json)主要是控制AI不要随便给我提交代码，仅暂存即可，还有就是编码强制提醒要根据工作流的规范来做事儿。
+
+## Dynamic Workflows
+
+刚把我自己的工作流搞出来不久，Claude Code官方就出了动态工作流，这是最近（2026-05-28）新出的功能，Claude Code v2.1.154 或更高版本才能支持。
+
+支持之后效果如下图所示：
+
+![image6](./image/image6.png)
+
+![image7](./image/image7.png)
+
+该功能专为复杂任务而生，可以动态生成工作流，相当于就是自动触发Harness Engineering，并指挥上百个subagent同时干活儿。
+
+下面是官方给出的Subagent、SKILL和动态工作流的对比：
+
+![image8](./image/image8.png)
+
+Bun 的创始人 Jarred Sumner 使用动态工作流完成了一项极具挑战的任务：将整个 Bun 运行时从 Zig 语言全面迁移到了 Rust 语言。最终交付了约 **75 万行** Rust 代码，从第一笔提交到合并仅耗时 **11 天**，现有测试套件通过率高达 **99.8%**。
+
+目前，该功能尚在研究中，而且烧tokens也是很恐怖的，所以并非什么任务都需要使用这个模式，也不代表我们前面研究了半天自己的AI工作流毫无意义。不过，动态工作流确实很强，很可能又是一场革命性的升级。
+
 ## 参考资料
 
 *   [探索 .claude 目录](https://code.claude.com/docs/zh-CN/claude-directory)
@@ -245,5 +319,4 @@ Hooks 配置在 `settings.json` 中（个人级、项目级、模块级都支持
 *   [使用 hooks 自动化](https://code.claude.com/docs/zh-CN/hooks-guide)
 *   [创建自定义 subagents](https://code.claude.com/docs/zh-CN/sub-agents#enable-persistent-memory)
 *   [Agent-teams](https://code.claude.com/docs/zh-CN/agent-teams)
-
-## 未完待续......
+*   [使用动态工作流大规模编排子代理](https://code.claude.com/docs/zh-CN/workflows)
