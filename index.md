@@ -15,6 +15,9 @@ hero:
       text: 关于我
       link: /about
     - theme: alt
+      text: 我的项目
+      link: /article/project
+    - theme: alt
       text: 我的掘金
       link: https://juejin.cn/user/2875978150314408/columns
     - theme: alt

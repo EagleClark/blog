@@ -42,6 +42,7 @@ export default defineConfig({
       },
       { text: '大前端资源站', link: '/article/fe-resource/UI库' },
       { text: '杂七杂八', link: '/article/other/孙子兵法/01' },
+      { text: '我的项目', link: '/article/project' },
       { text: '关于我', link: '/about' },
     ],
 
