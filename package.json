@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@giscus/vue": "^3.1.1",
     "vitepress": "^1.6.3"
   },
   "dependencies": {
