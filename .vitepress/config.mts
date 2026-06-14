@@ -20,7 +20,20 @@ export default defineConfig({
   markdown: {
     image: {
       lazyLoading: true,
-    }
+    },
+    config(md) {
+      const defaultFence = md.renderer.rules.fence;
+      if (defaultFence) {
+        md.renderer.rules.fence = (...args) => {
+          const [tokens, idx] = args;
+          const token = tokens[idx];
+          if (token.info.trim() === 'mermaid') {
+            return `<pre class="mermaid">${md.utils.escapeHtml(token.content)}</pre>`;
+          }
+          return defaultFence(...args);
+        };
+      }
+    },
   },
   themeConfig: {
     
