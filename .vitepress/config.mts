@@ -77,6 +77,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Git基础', link: '/article/front-end/Git基础/' },
+            { text: 'Git最佳实践', link: '/article/front-end/Git最佳实践/' },
             { text: 'Webpack基础', link: '/article/front-end/Webpack' },
             { text: '重学CSS', link: '/article/front-end/重学CSS/' },
             { text: '事件循环', link: '/article/front-end/事件循环/' },
