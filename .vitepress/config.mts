@@ -132,7 +132,14 @@ export default defineConfig({
             { text: 'Redis基础', link: '/article/full-stack/redis/', },
             { text: 'InfluxDB基础', link: '/article/full-stack/InfluxDB/', },
           ]
-        }
+        },
+        {
+          text: '用户权限体系',
+          collapsed: true,
+          items: [
+            { text: 'LDAP', link: '/article/full-stack/LDAP/', },
+          ]
+        },
       ],
       '/article/data-structures-and-algorithms': [
         {
