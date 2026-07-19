@@ -29,3 +29,27 @@
   filter: drop-shadow(-2px 4px 6px rgba(0, 0, 0, 0.2));
   padding: 18px;
 }
+
+/* Mermaid 图表容器：防止 SVG 内容溢出裁剪 */
+.mermaid-rendered {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 16px 0;
+  padding: 12px 4px;
+}
+
+.mermaid-rendered svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 防止节点内多行文本被 foreignObject 裁掉（mermaid 算高偏小） */
+.mermaid-rendered foreignObject {
+  overflow: visible !important;
+}
+
+.mermaid-rendered .label div {
+  padding-bottom: 6px;
+  line-height: 1.5;
+}

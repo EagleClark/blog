@@ -97,6 +97,7 @@ export default defineConfig({
             { text: 'HTTPS到底是如何保障我们的安全的', link: '/article/front-end/HTTPS到底是如何保障我们的安全的/' },
             { text: '浏览器CryptoAPI实践指南之ECDH', link: '/article/front-end/浏览器CryptoAPI实践指南之ECDH/' },
             { text: '微前端', link: '/article/front-end/微前端' },
+            { text: '微前端-模块联邦', link: '/article/front-end/微前端-模块联邦/' },
             { text: 'Web自动化测试', link: '/article/front-end/Web自动化测试/' },
           ]
         }

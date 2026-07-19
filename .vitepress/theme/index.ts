@@ -36,6 +36,11 @@ async function renderMermaid() {
       startOnLoad: false,
       securityLevel: 'loose',
       theme,
+      // 防止复杂图表内容被裁剪
+      flowchart: { useMaxWidth: true, htmlLabels: true },
+      sequence: { useMaxWidth: true },
+      gantt: { useMaxWidth: true },
+      journey: { useMaxWidth: true },
     });
 
     // 兜底：把 VitePress 默认渲染的 pre code.language-mermaid 替换成 pre.mermaid
@@ -60,6 +65,69 @@ async function renderMermaid() {
         const container = document.createElement('div');
         container.className = 'mermaid-rendered';
         container.innerHTML = svg;
+
+        // 修复 SVG 纵向裁剪：mermaid 生成的节点高度经常不够
+        const svgEl = container.querySelector('svg');
+        if (svgEl) {
+          svgEl.setAttribute('width', '100%');
+          svgEl.removeAttribute('height');
+
+          // 延迟到浏览器布局完成后修正节点高度
+          requestAnimationFrame(() => {
+            // 1. 修正 foreignObject 高度 —— mermaid 算多行中文/emoji 文本时经常偏小
+            const foreignObjects = svgEl.querySelectorAll('foreignObject');
+            foreignObjects.forEach((fo) => {
+              const div = fo.querySelector('div');
+              if (!div) return;
+              const textHeight = div.scrollHeight;
+              const foHeight = parseFloat(fo.getAttribute('height') || '0');
+              if (textHeight > foHeight) {
+                const diff = textHeight - foHeight;
+                // 撑高 foreignObject
+                fo.setAttribute('height', String(textHeight));
+                // 找到同节点下的 rect，同步撑高
+                const nodeGroup = fo.closest('g');
+                if (nodeGroup) {
+                  // rect 可能在 nodeGroup 下（mermaid v11 结构）或上一层
+                  const rect = nodeGroup.querySelector(':scope > rect')
+                    || nodeGroup.parentElement?.querySelector(':scope > rect');
+                  if (rect) {
+                    const rectH = parseFloat(rect.getAttribute('height') || '0');
+                    rect.setAttribute('height', String(rectH + diff));
+                  }
+                }
+              }
+            });
+
+            // 2. 修正 viewBox 高度，确保所有内容都在视口内
+            try {
+              let maxBottom = 0;
+              const walk = (el: Element) => {
+                for (const child of el.children) {
+                  try {
+                    const bbox = (child as SVGGraphicsElement).getBBox?.();
+                    if (bbox && bbox.height > 0) {
+                      maxBottom = Math.max(maxBottom, bbox.y + bbox.height);
+                    }
+                  } catch { /* 跳过 */ }
+                  walk(child);
+                }
+              };
+              walk(svgEl);
+              if (maxBottom > 0) {
+                const vb = svgEl.getAttribute('viewBox');
+                if (vb) {
+                  const parts = vb.split(/\s+/).map(Number);
+                  const padded = maxBottom + 24;
+                  if (padded > parts[3]) {
+                    svgEl.setAttribute('viewBox', `${parts[0]} ${parts[1]} ${parts[2]} ${padded}`);
+                  }
+                }
+              }
+            } catch { /* 容错 */ }
+          });
+        }
+
         htmlEl.style.display = 'none';
         el.after(container);
       } catch (e) {
