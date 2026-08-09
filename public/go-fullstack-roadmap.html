@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="面向前端工程师的 Go 全栈转型路线：12 周学习计划，进度本地保存，支持暗色模式。">
+<title>Go 全栈转型路线 · 12 周学习计划</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --text: #1d1d1f;
+    --text2: #6e6e73;
+    --text3: #86868b;
+    --accent: #0071e3;
+    --accent2: #2997ff;
+    --accent-soft: rgba(0, 113, 227, 0.10);
+    --danger: #ff3b30;
+    --danger-soft: rgba(255, 59, 48, 0.08);
+    --card: #ffffff;
+    --border: rgba(0, 0, 0, 0.08);
+    --shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.05);
+    --nav-bg: rgba(255, 255, 255, 0.72);
+    --ring-track: rgba(0, 0, 0, 0.08);
+    --checkbox-track: rgba(0, 0, 0, 0.18);
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #000000;
+    --bg2: #161617;
+    --text: #f5f5f7;
+    --text2: #a1a1a6;
+    --text3: #6e6e73;
+    --accent: #2997ff;
+    --accent2: #64b5ff;
+    --accent-soft: rgba(41, 151, 255, 0.16);
+    --card: #1d1d1f;
+    --border: rgba(255, 255, 255, 0.12);
+    --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --nav-bg: rgba(0, 0, 0, 0.72);
+    --ring-track: rgba(255, 255, 255, 0.12);
+    --checkbox-track: rgba(255, 255, 255, 0.32);
+    color-scheme: dark;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  ::selection { background: rgba(0, 113, 227, 0.22); }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  /* ---------- 顶部导航 ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(16px, 4vw, 42px);
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, background 0.35s ease;
+    z-index: 60;
+  }
+
+  .nav.scrolled { border-bottom-color: var(--border); }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), #7b5cff);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+
+  .nav-pill {
+    font-size: 13px;
+    color: var(--text2);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 980px;
+    padding: 5px 14px;
+    white-space: nowrap;
+    transition: background 0.3s ease;
+  }
+
+  .icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, color 0.3s ease;
+  }
+
+  .icon-btn:hover { background: var(--bg2); transform: scale(1.06); }
+
+  .icon-btn svg { width: 19px; height: 19px; }
+
+  .icon-btn .icon-moon { display: none; }
+  :root[data-theme="dark"] .icon-btn .icon-sun { display: none; }
+  :root[data-theme="dark"] .icon-btn .icon-moon { display: block; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 148px 24px 64px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto;
+    height: 560px;
+    background:
+      radial-gradient(600px 320px at 18% 10%, rgba(41, 151, 255, 0.16), transparent 70%),
+      radial-gradient(640px 340px at 82% 8%, rgba(123, 92, 255, 0.15), transparent 70%),
+      radial-gradient(520px 300px at 50% 28%, rgba(0, 113, 227, 0.07), transparent 70%);
+    pointer-events: none;
+  }
+
+  :root[data-theme="dark"] .hero::before {
+    background:
+      radial-gradient(600px 320px at 18% 10%, rgba(41, 151, 255, 0.22), transparent 70%),
+      radial-gradient(640px 340px at 82% 8%, rgba(123, 92, 255, 0.20), transparent 70%),
+      radial-gradient(520px 300px at 50% 28%, rgba(0, 113, 227, 0.10), transparent 70%);
+  }
+
+  .hero-inner { position: relative; }
+
+  .eyebrow {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+  }
+
+  .hero h1 {
+    margin: 20px auto 0;
+    max-width: 900px;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+  }
+
+  .hero-sub {
+    margin: 24px auto 0;
+    max-width: 660px;
+    font-size: clamp(17px, 2.2vw, 21px);
+    color: var(--text2);
+    line-height: 1.55;
+  }
+
+  .cta-row {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 28px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: scale(1.04); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .btn-ghost:hover { color: var(--accent2); transform: scale(1.04); }
+
+  .btn-ghost .chev { font-size: 19px; line-height: 1; }
+
+  .stats {
+    margin-top: 62px;
+    display: flex;
+    justify-content: center;
+    gap: clamp(32px, 8vw, 84px);
+    flex-wrap: wrap;
+  }
+
+  .stat b {
+    display: block;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .stat span {
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  /* ---------- 通用 section ---------- */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 72px 0 26px;
+  }
+
+  .section-title {
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  .section-sub {
+    margin-top: 6px;
+    color: var(--text2);
+    font-size: 15px;
+  }
+
+  .text-links {
+    display: flex;
+    gap: 20px;
+    white-space: nowrap;
+  }
+
+  .text-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .text-link:hover { color: var(--accent2); text-decoration: underline; }
+
+  /* ---------- 进度总览卡片 ---------- */
+  .overview {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: clamp(24px, 4vw, 38px);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(20px, 4vw, 40px);
+    align-items: center;
+    transition: background 0.3s ease;
+  }
+
+  .ring-wrap { display: grid; place-items: center; }
+
+  .ring-wrap svg { width: 138px; height: 138px; }
+
+  .ring-track {
+    fill: none;
+    stroke: var(--ring-track);
+    stroke-width: 10;
+  }
+
+  .ring-bar {
+    fill: none;
+    stroke: url(#ringGradient);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ring-label {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    fill: var(--text);
+  }
+
+  .ring-label small {
+    font-size: 14px;
+    font-weight: 400;
+    fill: var(--text2);
+  }
+
+  .overview-info h2 {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .overview-sum {
+    margin-top: 6px;
+    color: var(--text2);
+    font-size: 15px;
+  }
+
+  .bar {
+    margin-top: 18px;
+    height: 8px;
+    border-radius: 980px;
+    background: var(--ring-track);
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 980px;
+    background: linear-gradient(90deg, var(--accent), #7b5cff);
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .overview-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+  }
+
+  .date-fields {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(16px, 4vw, 36px);
+    flex-wrap: wrap;
+  }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 7px;
+  }
+
+  .field input[type="date"] {
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    min-width: 168px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+
+  .field input[type="date"]:hover { border-color: var(--accent); }
+
+  .finish-text {
+    font-size: 15px;
+    color: var(--text2);
+    padding-bottom: 10px;
+  }
+
+  .finish-text b { color: var(--text); font-weight: 600; }
+
+  .clear-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--danger);
+    background: transparent;
+    border: 1px solid rgba(255, 59, 48, 0.32);
+    border-radius: 980px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .clear-btn:hover { background: var(--danger-soft); transform: scale(1.04); }
+
+  .local-note {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--text3);
+  }
+
+  /* ---------- 阶段卡片 ---------- */
+  .phase {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .phase:hover { box-shadow: var(--shadow); }
+
+  .phase-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .phase-num {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #7b5cff);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+  }
+
+  .phase-meta { flex: 1; min-width: 0; }
+
+  .phase-title {
+    font-size: 18.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .phase-sub {
+    margin-top: 3px;
+    font-size: 13px;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .phase-side {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .phase-count {
+    font-size: 13px;
+    color: var(--text2);
+    text-align: right;
+    min-width: 46px;
+  }
+
+  .mini-bar {
+    width: 86px;
+    height: 6px;
+    border-radius: 980px;
+    background: var(--ring-track);
+    overflow: hidden;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 980px;
+    background: linear-gradient(90deg, var(--accent), #7b5cff);
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    color: var(--text2);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .phase.open .chevron { transform: rotate(180deg); }
+
+  .phase-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .phase.open .phase-body { grid-template-rows: 1fr; }
+
+  .phase-body-inner { overflow: hidden; min-height: 0; }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 22px;
+    border-top: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .task:hover { background: var(--bg2); }
+
+  .cb {
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.6px solid var(--checkbox-track);
+    display: grid;
+    place-items: center;
+    color: transparent;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  }
+
+  .task:active .cb { transform: scale(0.88); }
+
+  .task.done .cb {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .cb svg {
+    width: 13px; height: 13px;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    transition: stroke-dashoffset 0.3s ease 0.05s;
+  }
+
+  .task.done .cb svg { stroke-dashoffset: 0; }
+
+  .task-text { min-width: 0; }
+
+  .task-title {
+    font-size: 15.5px;
+    font-weight: 500;
+    transition: color 0.25s ease, opacity 0.25s ease;
+  }
+
+  .task.done .task-title {
+    color: var(--text2);
+    opacity: 0.72;
+  }
+
+  .task-desc {
+    margin-top: 3px;
+    font-size: 13.5px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .task-link {
+    margin-left: auto;
+    align-self: center;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    background: var(--accent-soft);
+    border-radius: 980px;
+    padding: 7px 15px;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+
+  .task-link:hover {
+    background: rgba(0, 113, 227, 0.18);
+    transform: scale(1.05);
+  }
+
+  .task-link .task-link-arrow {
+    font-size: 15px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .task-link:hover .task-link-arrow { transform: translateX(2px); }
+
+  .notes-wrap {
+    padding: 16px 22px 22px;
+    border-top: 1px solid var(--border);
+  }
+
+  .notes-label {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .notes-wrap textarea {
+    width: 100%;
+    min-height: 74px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+  }
+
+  .notes-wrap textarea:focus { border-color: var(--accent); outline: none; }
+
+  .notes-wrap textarea::placeholder { color: var(--text3); }
+
+  /* ---------- 资源与心法 ---------- */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.3s ease;
+  }
+
+  .tip-card h3 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+
+  .tip-card ul { list-style: none; }
+
+  .tip-card li {
+    padding: 8px 0;
+    font-size: 14.5px;
+    color: var(--text2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .tip-card li:first-child { border-top: none; }
+
+  .tip-card li b { color: var(--text); font-weight: 600; }
+
+  .tip-card li .dot {
+    flex-shrink: 0;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 9px;
+  }
+
+  .tip-card a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .tip-card a:hover { text-decoration: underline; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    padding: 56px 24px 64px;
+    text-align: center;
+    color: var(--text2);
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  footer .clear-btn { margin-top: 22px; }
+
+  /* ---------- 弹窗 ---------- */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal.show { display: flex; opacity: 1; }
+
+  .modal-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border-radius: 24px;
+    padding: 34px 30px 28px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transform: scale(0.92) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .modal.show .modal-card { transform: none; }
+
+  .modal-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: var(--danger-soft);
+    color: var(--danger);
+    display: grid;
+    place-items: center;
+  }
+
+  .modal-icon svg { width: 26px; height: 26px; }
+
+  .modal-card h3 {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .modal-card p {
+    margin-top: 10px;
+    font-size: 14.5px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    margin-top: 26px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+    font-size: 15px;
+    padding: 10px 24px;
+  }
+
+  .btn-outline:hover { background: var(--bg2); }
+
+  .btn-danger {
+    background: var(--danger);
+    color: #fff;
+    font-size: 15px;
+    padding: 10px 24px;
+  }
+
+  .btn-danger:hover { background: #ff6b62; }
+
+  /* ---------- 动画 ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 720px) {
+    .overview { grid-template-columns: 1fr; text-align: center; }
+    .overview-meta { justify-content: center; text-align: center; }
+    .date-fields { justify-content: center; }
+    .finish-text { width: 100%; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+    .phase-head { flex-wrap: wrap; }
+    .phase-side { margin-left: auto; }
+    .phase-sub { white-space: normal; }
+    .task { flex-wrap: wrap; }
+    .task-link { margin-left: 0; }
+    .hero { padding-top: 130px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <nav class="nav" id="nav">
+    <div class="brand">
+      <span class="brand-mark">Go</span>
+      <span>Go 全栈转型路线</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-pill" id="navPill">0% 已完成</span>
+      <button class="icon-btn" id="themeBtn" aria-label="切换深浅色模式" title="切换深浅色模式">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">FRONTEND → FULL-STACK</p>
+      <h1>用 Go 开启你的<br>全栈转型。</h1>
+      <p class="hero-sub">
+        一份为前端工程师定制的 12 周进阶路线：Gin 深入、数据库缓存、并发、
+        容器化与微服务，每项任务都附可直接点击的学习链接，进度自动保存在本机浏览器。
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#overview">查看学习进度</a>
+        <a class="btn btn-ghost" href="#plan">开始学习 <span class="chev">›</span></a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>12</b><span>周规划</span></div>
+        <div class="stat"><b>9</b><span>个阶段</span></div>
+        <div class="stat"><b id="statTasks">58</b><span>项任务</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 进度总览 -->
+    <section class="section" id="overview">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title">进度总览</h2>
+          <p class="section-sub">勾选任务即可更新进度，所有数据只保存在当前浏览器。</p>
+        </div>
+      </div>
+
+      <div class="overview reveal">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 140 140" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0071e3"></stop>
+                <stop offset="100%" stop-color="#7b5cff"></stop>
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="70" cy="70" r="58"></circle>
+            <circle class="ring-bar" id="ringBar" cx="70" cy="70" r="58" transform="rotate(-90 70 70)"></circle>
+            <text class="ring-label" id="ringPct" x="70" y="72" text-anchor="middle" dominant-baseline="central">0%</text>
+          </svg>
+        </div>
+        <div class="overview-info">
+          <h2 id="overviewTitle">学习进度</h2>
+          <p class="overview-sum" id="overviewSum">尚未开始，从第一个阶段勾起来吧</p>
+          <div class="bar" role="progressbar" aria-label="总进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="bar-fill" id="barFill"></div>
+          </div>
+          <p class="local-note">数据保存在本机 localStorage，清除浏览器站点数据或点击「清除全部数据」后会丢失。</p>
+        </div>
+        <div class="overview-meta">
+          <div class="date-fields">
+            <div class="field">
+              <label for="startDate">开始日期</label>
+              <input type="date" id="startDate">
+            </div>
+            <p class="finish-text" id="finishText">设置开始日期后，自动推算各阶段时间</p>
+          </div>
+          <button class="clear-btn" id="openClear" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13M10 11v6M14 11v6"></path>
+            </svg>
+            清除全部数据
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 学习路线 -->
+    <section class="section" id="plan">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title">学习路线</h2>
+          <p class="section-sub">9 个阶段、12 周进阶路线，每项任务都附学习链接；点击任务可勾选完成，展开阶段可记录笔记。</p>
+        </div>
+        <div class="text-links">
+          <button class="text-link" id="expandAll" type="button">全部展开</button>
+          <button class="text-link" id="collapseAll" type="button">全部折叠</button>
+        </div>
+      </div>
+      <div id="phases"></div>
+    </section>
+
+    <!-- 资源与心法 -->
+    <section class="section" id="resources">
+      <div class="section-head reveal">
+        <div>
+          <h2 class="section-title">资源与心法</h2>
+          <p class="section-sub">给你的转型补点弹药。</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="tip-card reveal">
+          <h3>推荐资源</h3>
+          <ul>
+            <li><span class="dot"></span><span><b>A Tour of Go</b> — <a href="https://go.dev/tour/" target="_blank" rel="noopener">go.dev/tour</a>，官方互动入门</span></li>
+            <li><span class="dot"></span><span><b>Go by Example</b> — <a href="https://gobyexample.com/" target="_blank" rel="noopener">gobyexample.com</a>，按例子速查语法</span></li>
+            <li><span class="dot"></span><span><b>Effective Go</b> — <a href="https://go.dev/doc/effective_go" target="_blank" rel="noopener">go.dev/doc/effective_go</a>，官方风格指南</span></li>
+            <li><span class="dot"></span><span><b>Gin 框架</b> — <a href="https://gin-gonic.com/" target="_blank" rel="noopener">gin-gonic.com</a>，后端实战首选</span></li>
+            <li><span class="dot"></span><span><b>GORM</b> — <a href="https://gorm.io/" target="_blank" rel="noopener">gorm.io</a>；类型安全路线可看 <a href="https://sqlc.dev/" target="_blank" rel="noopener">sqlc.dev</a></span></li>
+            <li><span class="dot"></span><span><b>《The Go Programming Language》</b> — Go 语言圣经，按章节精读</span></li>
+          </ul>
+        </div>
+        <div class="tip-card reveal">
+          <h3>转型心法</h3>
+          <ul>
+            <li><span class="dot"></span><span><b>别把 TS 心智硬套 Go：</b>错误处理、组合、并发模型差异很大，先清零再重建。</span></li>
+            <li><span class="dot"></span><span><b>输出优先：</b>每周至少 3 天写代码，每个阶段都留下可演示的成果。</span></li>
+            <li><span class="dot"></span><span><b>发挥前端优势：</b>你更懂用户体验与 API 设计，这是纯后端没有的差异化竞争力。</span></li>
+            <li><span class="dot"></span><span><b>项目驱动：</b>12 周结束前打磨一个完整全栈项目，让它成为简历上的主角。</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="reveal">
+    <p>本页面为独立学习工具，所有交互数据仅保存在当前浏览器的 localStorage 中。</p>
+    <p>「清除全部数据」会删除所有勾选进度、笔记与设置，且无法恢复。</p>
+    <button class="clear-btn" id="openClear2" type="button">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13M10 11v6M14 11v6"></path>
+      </svg>
+      清除全部数据
+    </button>
+  </footer>
+
+  <!-- 确认弹窗 -->
+  <div class="modal" id="clearModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 8v5M12 16.5v.1"></path>
+          <path d="M10.3 3.9 2.6 17a1.7 1.7 0 0 0 1.5 2.6h15.8a1.7 1.7 0 0 0 1.5-2.6L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"></path>
+        </svg>
+      </div>
+      <h3 id="modalTitle">确定要清除全部数据吗？</h3>
+      <p>所有勾选进度、阶段笔记、开始日期与主题设置都会被删除，此操作无法撤销。</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="cancelClear" type="button">取消</button>
+        <button class="btn btn-danger" id="confirmClear" type="button">清除</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  var LS_KEY = "go-fullstack-roadmap-v2";
+
+  var PHASES = [
+    {
+      num: "0",
+      title: "认知与准备",
+      weeks: [0, 0],
+      weekLabel: "第 0 周 · 2~3 天",
+      goal: "装好环境，建立 Go 语言心智模型",
+      tasks: [
+        { t: "明确转型定位", d: "先成为能独立交付后端的全栈工程师，再向云原生、微服务深入。", u: "https://go.dev/doc/" },
+        { t: "安装 Go 工具链", d: "安装最新版 Go 并跑通 go version；Windows 或 WSL 均可。", u: "https://go.dev/doc/install" },
+        { t: "配置国内代理", d: "设置 GOPROXY=https://goproxy.cn,direct，加速模块下载。", u: "https://goproxy.cn/" },
+        { t: "配好开发环境", d: "VS Code + Go 插件或 GoLand，开启 gofmt 自动格式化、补全与调试。", u: "https://code.visualstudio.com/docs/languages/go" },
+        { t: "快速过一遍官方教程", d: "1~2 天刷完 A Tour of Go，先混个脸熟。", u: "https://go.dev/tour/" },
+        { t: "读 Effective Go", d: "理解 Go 的风格与惯例，后续写代码少踩坑。", u: "https://go.dev/doc/effective_go" }
+      ]
+    },
+    {
+      num: "1",
+      title: "Go 语言核心",
+      weeks: [1, 2],
+      weekLabel: "第 1~2 周",
+      goal: "能用 Go 写出带测试的 CLI 工具",
+      tasks: [
+        { t: "基础语法速通", d: "变量、常量、类型、if/for/switch；for 是唯一循环。", u: "https://gobyexample.com/" },
+        { t: "函数、闭包与多返回值", d: "对照 TS 的函数式写法，理解命名返回值、defer 与闭包差异。", u: "https://gobyexample.com/closures" },
+        { t: "切片与 map", d: "理解底层数组、append 扩容机制与 nil 切片，这是新手最常踩的坑。", u: "https://gobyexample.com/slices" },
+        { t: "结构体、方法与组合", d: "值接收者 vs 指针接收者；通过嵌入实现组合优于继承。", u: "https://gobyexample.com/structs" },
+        { t: "接口与类型断言", d: "隐式实现（鸭子类型）、空接口、断言与类型 switch。", u: "https://gobyexample.com/interfaces" },
+        { t: "错误处理", d: "error 即值：errors.New / Is / As、%w 包装；忘掉 try/catch 思维。", u: "https://go.dev/blog/go1.13-errors" },
+        { t: "指针与值语义", d: "搞懂何时用 *T、何时用 T，建立栈与堆的基本直觉。", u: "https://gobyexample.com/pointers" },
+        { t: "泛型入门", d: "Go 1.18+ 类型参数，写通用数据结构与函数。", u: "https://go.dev/doc/tutorial/generics" },
+        { t: "反射基础", d: "reflect 做动态检查，了解用途与性能代价即可。", u: "https://pkg.go.dev/reflect" },
+        { t: "包与可见性", d: "package、导出标识符大小写、internal 目录约束。", u: "https://go.dev/doc/code" },
+        { t: "测试与基准", d: "表驱动测试、go test、go vet 与基准测试。", u: "https://go.dev/doc/tutorial/add-a-test" },
+        { t: "里程碑：CLI 工具", d: "用 cobra 写一个命令行工具并配上测试。", u: "https://github.com/spf13/cobra" }
+      ]
+    },
+    {
+      num: "2",
+      title: "工程化与项目结构",
+      weeks: [3, 3],
+      weekLabel: "第 3 周",
+      goal: "搭出规范、可维护的工程骨架",
+      tasks: [
+        { t: "Go Modules 依赖管理", d: "go mod init / tidy / get，理解 semver 与模块缓存。", u: "https://go.dev/doc/modules/managing-dependencies" },
+        { t: "项目布局", d: "cmd/、internal/、pkg/ 的常见约定与分层思想。", u: "https://github.com/golang-standards/project-layout" },
+        { t: "配置管理", d: "viper 读取环境变量 + YAML，理解配置优先级。", u: "https://github.com/spf13/viper" },
+        { t: "结构化日志（slog）", d: "标准库结构化日志，学习按请求链路串联。", u: "https://pkg.go.dev/log/slog" },
+        { t: "结构化日志（zap）", d: "对比 zap 的高性能日志用法。", u: "https://github.com/uber-go/zap" },
+        { t: "优雅退出与信号处理", d: "os/signal 处理 SIGINT/SIGTERM，平滑关停服务。", u: "https://pkg.go.dev/os/signal" },
+        { t: "构建自动化", d: "Makefile 或 Taskfile 统一 build / test / run / lint。", u: "https://taskfile.dev/" },
+        { t: "代码质量与 Lint", d: "golangci-lint、gofumpt，配合 pre-commit 钩子。", u: "https://golangci-lint.run/" },
+        { t: "最小 CI", d: "GitHub Actions 跑 go test + lint + build 质量门禁。", u: "https://docs.github.com/en/actions" }
+      ]
+    },
+    {
+      num: "3",
+      title: "Web 后端与 Gin 框架",
+      weeks: [4, 4],
+      weekLabel: "第 4 周",
+      goal: "用 Gin 独立交付 REST API",
+      tasks: [
+        { t: "net/http 标准库", d: "Handler、ServeMux、http.Server 超时配置，先理解底层。", u: "https://pkg.go.dev/net/http" },
+        { t: "JSON 与 struct tag", d: "encoding/json 的序列化控制：字段名、忽略、内嵌。", u: "https://pkg.go.dev/encoding/json" },
+        { t: "Gin 框架入门", d: "路由、分组、参数绑定，理解 Gin 生态与惯例。", u: "https://gin-gonic.com/en/docs/" },
+        { t: "官方 Gin 实战教程", d: "跟着官方教程做一个带 CRUD 的 API。", u: "https://go.dev/doc/tutorial/web-service-gin" },
+        { t: "Gin 中间件", d: "日志、CORS、Recovery、限流，理解洋葱模型。", u: "https://github.com/gin-contrib/cors" },
+        { t: "参数绑定与校验", d: "ShouldBindJSON + validator 标签，统一错误返回。", u: "https://pkg.go.dev/github.com/go-playground/validator/v10" },
+        { t: "统一响应与错误码", d: "参考真实项目设计响应结构与业务错误码。", u: "https://github.com/gothinkster/golang-gin-realworld-example-app" },
+        { t: "框架对比：Echo / Fiber", d: "了解不同框架的生态差异，按场景选型。", u: "https://echo.labstack.com/docs/" },
+        { t: "OpenAPI 文档", d: "用 swaggo 自动生成 Swagger 文档，方便前端对接。", u: "https://github.com/swaggo/swag" },
+        { t: "httptest 接口测试", d: "用 httptest 给 API 写自动化测试。", u: "https://pkg.go.dev/net/http/httptest" },
+        { t: "里程碑：REST API + 前端联调", d: "做一个完整 CRUD 接口，用你熟悉的前端调通全链路。", u: "https://github.com/gothinkster/realworld" }
+      ]
+    },
+    {
+      num: "4",
+      title: "数据库与缓存",
+      weeks: [5, 6],
+      weekLabel: "第 5~6 周",
+      goal: "设计并实现带缓存的数据层",
+      tasks: [
+        { t: "database/sql 与连接池", d: "理解连接池参数，避免连接泄漏与耗尽。", u: "https://pkg.go.dev/database/sql" },
+        { t: "GORM 模型与 CRUD", d: "上手 GORM 常用操作与模型定义。", u: "https://gorm.io/docs/" },
+        { t: "GORM 事务与钩子", d: "事务、软删除、钩子与自动迁移。", u: "https://gorm.io/docs/transactions.html" },
+        { t: "sqlc 类型安全 SQL", d: "用 sqlc 生成类型安全代码，与 ORM 路线对比。", u: "https://docs.sqlc.dev/en/latest/" },
+        { t: "数据库迁移", d: "golang-migrate / goose 版本化管理 schema。", u: "https://github.com/golang-migrate/migrate" },
+        { t: "MySQL 索引与 EXPLAIN", d: "学会看执行计划，优化慢查询。", u: "https://dev.mysql.com/doc/refman/8.0/en/explain.html" },
+        { t: "PostgreSQL 进阶", d: "窗口函数、JSONB 等实用特性，拓宽数据能力。", u: "https://www.postgresql.org/docs/current/tutorial-window.html" },
+        { t: "Redis 客户端 go-redis", d: "缓存、分布式锁、会话存储实战。", u: "https://pkg.go.dev/github.com/redis/go-redis/v9" },
+        { t: "缓存一致性策略", d: "Cache Aside、缓存穿透、击穿与雪崩的应对。", u: "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside" },
+        { t: "里程碑：用户系统", d: "注册/登录/资料 + 内容模块，MySQL + Redis。", u: "https://github.com/golang-jwt/jwt" }
+      ]
+    },
+    {
+      num: "5",
+      title: "并发编程",
+      weeks: [7, 7],
+      weekLabel: "第 7 周",
+      goal: "在真实场景安全地使用并发",
+      tasks: [
+        { t: "goroutine 与调度", d: "用 go 关键字启动并发，理解调度模型与 GOMAXPROCS。", u: "https://go.dev/tour/concurrency/1" },
+        { t: "WaitGroup", d: "等待一组任务完成；注意 Add 与 Done 的配对。", u: "https://gobyexample.com/waitgroups" },
+        { t: "channel 模式", d: "有缓冲/无缓冲、方向、关闭与 range 消费。", u: "https://gobyexample.com/channels" },
+        { t: "select 与超时", d: "多路复用、time.After、利用 close 广播完成信号。", u: "https://gobyexample.com/select" },
+        { t: "context", d: "取消传播、超时控制、传值；贯穿 HTTP 与数据库调用。", u: "https://pkg.go.dev/context" },
+        { t: "errgroup 并发编排", d: "编排并发任务并聚合错误。", u: "https://pkg.go.dev/golang.org/x/sync/errgroup" },
+        { t: "并发安全与竞态", d: "Mutex / RWMutex / atomic，用 go test -race 抓竞态。", u: "https://go.dev/blog/race-detector" },
+        { t: "Worker Pool 与限流", d: "实现常见并发模式并做压测对比。", u: "https://gobyexample.com/worker-pools" },
+        { t: "里程碑：并发任务队列", d: "做一个并发抓取/任务队列，对比串行版本。", u: "https://gobyexample.com/worker-pools" }
+      ]
+    },
+    {
+      num: "6",
+      title: "认证、安全与加固",
+      weeks: [8, 8],
+      weekLabel: "第 8 周",
+      goal: "给项目加上可靠的认证与安全基线",
+      tasks: [
+        { t: "密码哈希", d: "bcrypt / argon2 加盐哈希，绝不存明文密码。", u: "https://pkg.go.dev/golang.org/x/crypto/bcrypt" },
+        { t: "JWT 签发与校验", d: "golang-jwt 实现 token 认证与中间件。", u: "https://github.com/golang-jwt/jwt" },
+        { t: "JWT 规范细节", d: "读 RFC 7519 理解 claims、签名与安全要点。", u: "https://www.rfc-editor.org/rfc/rfc7519" },
+        { t: "RBAC 权限模型", d: "用 casbin 做资源级权限控制。", u: "https://casbin.org/docs/get-started/" },
+        { t: "CORS 与安全头", d: "gin-contrib/cors 与安全响应头配置。", u: "https://github.com/gin-contrib/cors" },
+        { t: "OWASP Top 10", d: "SQL 注入、XSS、CSRF 等攻防基线。", u: "https://owasp.org/www-project-top-ten/" },
+        { t: "审计与操作日志", d: "记录敏感操作，便于问题追溯。", u: "https://pkg.go.dev/log/slog" },
+        { t: "里程碑：安全加固", d: "给已有项目补认证、限流与安全头。", u: "https://owasp.org/www-project-top-ten/" }
+      ]
+    },
+    {
+      num: "7",
+      title: "容器化、部署与可观测性",
+      weeks: [9, 10],
+      weekLabel: "第 9~10 周",
+      goal: "完成容器化部署并建立监控",
+      tasks: [
+        { t: "Docker 多阶段构建", d: "用多阶段构建把 Go 镜像降到几十 MB。", u: "https://docs.docker.com/build/building/multi-stage/" },
+        { t: "docker-compose 编排", d: "一键启动 Go + MySQL + Redis 依赖环境。", u: "https://docs.docker.com/compose/" },
+        { t: "Nginx 反向代理", d: "静态资源托管、反向代理与负载均衡。", u: "https://nginx.org/en/docs/" },
+        { t: "HTTPS 与 Let's Encrypt", d: "免费证书申请与自动续期。", u: "https://letsencrypt.org/getting-started/" },
+        { t: "systemd 守护进程", d: "用 systemd 管理服务开机自启与崩溃重启。", u: "https://www.freedesktop.org/software/systemd/man/systemd.service.html" },
+        { t: "Prometheus 指标", d: "暴露 /metrics，理解指标类型与采集。", u: "https://prometheus.io/docs/introduction/overview/" },
+        { t: "Grafana 可视化", d: "搭建监控大盘，盯住核心指标。", u: "https://grafana.com/docs/grafana/latest/" },
+        { t: "OpenTelemetry 追踪", d: "接入分布式追踪，打通请求链路。", u: "https://opentelemetry.io/docs/languages/go/" },
+        { t: "里程碑：容器化上线", d: "完整项目部署到云服务器，域名 + HTTPS 访问。", u: "https://docs.docker.com/get-started/" }
+      ]
+    },
+    {
+      num: "8",
+      title: "进阶与全栈整合",
+      weeks: [11, 11],
+      weekLabel: "第 11~12 周",
+      goal: "具备独立交付全栈项目的能力",
+      tasks: [
+        { t: "gRPC 与 protobuf", d: "定义服务并生成 Go 代码，理解与 REST 的取舍。", u: "https://grpc.io/docs/languages/go/" },
+        { t: "RabbitMQ", d: "用 amqp091-go 实现消息生产与消费。", u: "https://www.rabbitmq.com/tutorials" },
+        { t: "Kafka", d: "用 kafka-go 客户端，理解流处理概念。", u: "https://github.com/segmentio/kafka-go" },
+        { t: "缓存一致性深化", d: "结合业务场景设计缓存更新策略。", u: "https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside" },
+        { t: "架构演进思维", d: "单体 → 模块化 → 微服务，知道何时不该拆。", u: "https://microservices.io/" },
+        { t: "性能剖析 pprof", d: "定位 CPU 与内存热点，做针对性优化。", u: "https://pkg.go.dev/net/http/pprof" },
+        { t: "压测与容量估算", d: "用 k6 压测并给出容量结论。", u: "https://k6.io/docs/" },
+        { t: "全栈整合实战", d: "按 RealWorld 规格做一个可展示的全栈作品。", u: "https://github.com/gothinkster/golang-gin-realworld-example-app" },
+        { t: "面试准备", d: "高频 Go 面试题、项目复盘与系统设计小抄。", u: "https://github.com/lifei6671/interview-go" },
+        { t: "作品集与简历", d: "把项目亮点写进简历，准备技术答辩。", u: "https://github.com/gothinkster/realworld" }
+      ]
+    }
+  ];
+
+  var TOTAL = PHASES.reduce(function (n, p) { return n + p.tasks.length; }, 0);
+  document.getElementById("statTasks").textContent = TOTAL;
+
+  /* ---------- 状态 ---------- */
+  function defaultState() {
+    return {
+      checked: PHASES.map(function (p) { return p.tasks.map(function () { return false; }); }),
+      notes: PHASES.map(function () { return ""; }),
+      expanded: [0],
+      theme: (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light",
+      startDate: ""
+    };
+  }
+
+  function loadState() {
+    var s = defaultState();
+    try {
+      var raw = localStorage.getItem(LS_KEY);
+      if (!raw) return s;
+      var d = JSON.parse(raw);
+      if (d && typeof d === "object") {
+        if (Array.isArray(d.checked)) {
+          s.checked = PHASES.map(function (p, i) {
+            var arr = d.checked[i];
+            return p.tasks.map(function (_, j) { return !!(arr && arr[j]); });
+          });
+        }
+        if (Array.isArray(d.notes)) {
+          s.notes = PHASES.map(function (_, i) { return typeof d.notes[i] === "string" ? d.notes[i] : ""; });
+        }
+        if (Array.isArray(d.expanded)) s.expanded = d.expanded.filter(function (x) { return x >= 0 && x < PHASES.length; });
+        if (d.theme === "dark" || d.theme === "light") s.theme = d.theme;
+        if (typeof d.startDate === "string") s.startDate = d.startDate;
+      }
+    } catch (e) { /* 数据损坏则回退默认 */ }
+    return s;
+  }
+
+  var state = loadState();
+
+  function save() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+    catch (e) { /* 隐私模式等场景下静默失败 */ }
+  }
+
+  /* ---------- 工具函数 ---------- */
+  var DAY = 86400000;
+
+  function addDays(dateStr, days) {
+    var d = new Date(dateStr + "T00:00:00");
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  var fmtMD = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric" });
+  var fmtFull = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" });
+
+  function overallDone() {
+    return state.checked.reduce(function (sum, arr) {
+      return sum + arr.filter(Boolean).length;
+    }, 0);
+  }
+
+  /* ---------- 渲染 ---------- */
+  var phasesEl = document.getElementById("phases");
+  var phaseEls = [];
+  var ringC = 2 * Math.PI * 58;
+  document.getElementById("ringBar").style.strokeDasharray = ringC;
+
+  PHASES.forEach(function (p, i) {
+    var article = document.createElement("article");
+    article.className = "phase" + (state.expanded.indexOf(i) > -1 ? " open" : "");
+    article.id = "phase-" + i;
+
+    var head = document.createElement("div");
+    head.className = "phase-head";
+    head.setAttribute("role", "button");
+    head.setAttribute("tabindex", "0");
+    head.setAttribute("aria-expanded", state.expanded.indexOf(i) > -1 ? "true" : "false");
+    head.setAttribute("aria-controls", "phase-body-" + i);
+
+    head.innerHTML =
+      '<span class="phase-num">' + p.num + '</span>' +
+      '<div class="phase-meta">' +
+        '<div class="phase-title">' + p.title + '</div>' +
+        '<div class="phase-sub" id="phaseSub-' + i + '">' + p.weekLabel + ' · ' + p.goal + '</div>' +
+      '</div>' +
+      '<div class="phase-side">' +
+        '<div class="phase-count" id="phaseCount-' + i + '">0/' + p.tasks.length + '</div>' +
+        '<div class="mini-bar"><div class="mini-bar-fill" id="phaseBar-' + i + '"></div></div>' +
+      '</div>' +
+      '<svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg>';
+
+    var body = document.createElement("div");
+    body.className = "phase-body";
+    body.id = "phase-body-" + i;
+    var inner = document.createElement("div");
+    inner.className = "phase-body-inner";
+
+    p.tasks.forEach(function (task, j) {
+      var row = document.createElement("div");
+      row.className = "task" + (state.checked[i][j] ? " done" : "");
+      row.setAttribute("role", "checkbox");
+      row.setAttribute("aria-checked", state.checked[i][j] ? "true" : "false");
+      row.setAttribute("tabindex", "0");
+      row.setAttribute("data-phase", i);
+      row.setAttribute("data-task", j);
+      row.innerHTML =
+        '<span class="cb">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>' +
+        '</span>' +
+        '<div class="task-text">' +
+          '<div class="task-title">' + task.t + '</div>' +
+          '<div class="task-desc">' + task.d + '</div>' +
+        '</div>' +
+        '<a class="task-link" href="' + task.u + '" target="_blank" rel="noopener">学习<span class="task-link-arrow">›</span></a>';
+      inner.appendChild(row);
+    });
+
+    var notesWrap = document.createElement("div");
+    notesWrap.className = "notes-wrap";
+    notesWrap.innerHTML =
+      '<div class="notes-label">✎ 阶段笔记（自动保存到本机）</div>' +
+      '<textarea id="notes-' + i + '" rows="2" placeholder="记录这个阶段的踩坑、链接或心得…"></textarea>';
+    inner.appendChild(notesWrap);
+
+    body.appendChild(inner);
+    article.appendChild(head);
+    article.appendChild(body);
+    phasesEl.appendChild(article);
+    phaseEls.push(article);
+  });
+
+  function applyTheme() {
+    document.documentElement.setAttribute("data-theme", state.theme);
+  }
+
+  function renderProgress() {
+    var done = overallDone();
+    var pct = TOTAL ? Math.round(done / TOTAL * 100) : 0;
+
+    document.getElementById("navPill").textContent = pct + "% 已完成";
+    document.getElementById("ringPct").firstChild.nodeValue = pct + "%";
+    document.getElementById("ringBar").style.strokeDashoffset = ringC * (1 - pct / 100);
+    document.getElementById("barFill").style.width = pct + "%";
+    document.getElementById("overviewTitle").textContent = done === TOTAL ? "恭喜，全部完成！" : "学习进度";
+    document.getElementById("overviewSum").textContent =
+      done === 0 ? "尚未开始，从第一个阶段勾起来吧" :
+      done === TOTAL ? "你已经完成全部 " + TOTAL + " 项任务，去面试吧！" :
+      "已完成 " + done + " / " + TOTAL + " 项任务，继续保持";
+
+    var bar = document.querySelector(".bar");
+    bar.setAttribute("aria-valuenow", pct);
+
+    PHASES.forEach(function (p, i) {
+      var n = state.checked[i].filter(Boolean).length;
+      var pp = p.tasks.length ? Math.round(n / p.tasks.length * 100) : 0;
+      document.getElementById("phaseCount-" + i).textContent = n + "/" + p.tasks.length;
+      document.getElementById("phaseBar-" + i).style.width = pp + "%";
+    });
+  }
+
+  function renderDates() {
+    var start = state.startDate;
+    if (!start || isNaN(addDays(start, 0).getTime())) {
+      document.getElementById("finishText").innerHTML = "设置开始日期后，自动推算各阶段时间";
+      PHASES.forEach(function (p, i) {
+        var sub = document.getElementById("phaseSub-" + i);
+        sub.textContent = p.weekLabel + " · " + p.goal;
+      });
+      return;
+    }
+    document.getElementById("finishText").innerHTML = "预计完成：<b>" + fmtFull.format(addDays(start, 83)) + "</b>";
+    PHASES.forEach(function (p, i) {
+      var from = addDays(start, p.weeks[0] * 7);
+      var to = addDays(start, p.weeks[1] * 7 + 6);
+      var sub = document.getElementById("phaseSub-" + i);
+      sub.textContent = fmtMD.format(from) + " – " + fmtMD.format(to) + " · " + p.goal;
+    });
+  }
+
+  function renderNotes() {
+    PHASES.forEach(function (_, i) {
+      var ta = document.getElementById("notes-" + i);
+      if (ta && ta.value !== state.notes[i]) ta.value = state.notes[i];
+    });
+  }
+
+  function renderExpanded() {
+    phaseEls.forEach(function (el, i) {
+      var open = state.expanded.indexOf(i) > -1;
+      el.classList.toggle("open", open);
+      var head = el.querySelector(".phase-head");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  function renderAll() {
+    applyTheme();
+    renderProgress();
+    renderDates();
+    renderNotes();
+    renderExpanded();
+  }
+
+  renderAll();
+
+  /* ---------- 交互 ---------- */
+  function toggleTask(i, j) {
+    state.checked[i][j] = !state.checked[i][j];
+    var row = phasesEl.querySelector('[data-phase="' + i + '"][data-task="' + j + '"]');
+    row.classList.toggle("done", state.checked[i][j]);
+    row.setAttribute("aria-checked", state.checked[i][j] ? "true" : "false");
+    save();
+    renderProgress();
+  }
+
+  phasesEl.addEventListener("click", function (e) {
+    if (e.target.closest(".task-link")) return;
+    var row = e.target.closest(".task");
+    if (row) {
+      toggleTask(+row.dataset.phase, +row.dataset.task);
+      return;
+    }
+    var head = e.target.closest(".phase-head");
+    if (head) togglePhase(head.parentElement);
+  });
+
+  phasesEl.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest(".task-link")) return;
+    e.preventDefault();
+    var row = e.target.closest(".task");
+    if (row) {
+      toggleTask(+row.dataset.phase, +row.dataset.task);
+      return;
+    }
+    var head = e.target.closest(".phase-head");
+    if (head) togglePhase(head.parentElement);
+  });
+
+  function togglePhase(article) {
+    var i = +article.id.replace("phase-", "");
+    var idx = state.expanded.indexOf(i);
+    if (idx > -1) state.expanded.splice(idx, 1);
+    else state.expanded.push(i);
+    save();
+    renderExpanded();
+  }
+
+  document.getElementById("expandAll").addEventListener("click", function () {
+    state.expanded = PHASES.map(function (_, i) { return i; });
+    save();
+    renderExpanded();
+  });
+
+  document.getElementById("collapseAll").addEventListener("click", function () {
+    state.expanded = [];
+    save();
+    renderExpanded();
+  });
+
+  /* 笔记自动保存 */
+  phasesEl.addEventListener("input", function (e) {
+    if (e.target.id && e.target.id.indexOf("notes-") === 0) {
+      var i = +e.target.id.replace("notes-", "");
+      state.notes[i] = e.target.value;
+      save();
+    }
+  });
+
+  /* 日期 */
+  var dateInput = document.getElementById("startDate");
+  dateInput.value = state.startDate;
+  dateInput.addEventListener("change", function () {
+    state.startDate = dateInput.value;
+    save();
+    renderDates();
+  });
+
+  /* 主题 */
+  document.getElementById("themeBtn").addEventListener("click", function () {
+    state.theme = state.theme === "dark" ? "light" : "dark";
+    save();
+    applyTheme();
+  });
+
+  /* 清除数据 */
+  var modal = document.getElementById("clearModal");
+  function openModal() { modal.classList.add("show"); }
+  function closeModal() { modal.classList.remove("show"); }
+  document.getElementById("openClear").addEventListener("click", openModal);
+  document.getElementById("openClear2").addEventListener("click", openModal);
+  document.getElementById("cancelClear").addEventListener("click", closeModal);
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+  document.getElementById("confirmClear").addEventListener("click", function () {
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    location.reload();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal.classList.contains("show")) closeModal();
+  });
+
+  /* 导航滚动状态 */
+  var nav = document.getElementById("nav");
+  window.addEventListener("scroll", function () {
+    nav.classList.toggle("scrolled", window.scrollY > 8);
+  }, { passive: true });
+
+  /* 滚动显现动画 */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add("in");
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+  }
+})();
+</script>
+</body>
+</html>
