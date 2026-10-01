@@ -201,6 +201,7 @@ export default defineConfig({
             { text: 'Claude Code使用技巧', link: '/article/ai/ClaudeCode使用技巧/' },
             { text: '基于WSL的AI开发环境搭建', link: '/article/ai/基于WSL的AI开发环境搭建/' },
             { text: '我的AI工作流', link: '/article/ai/我的AI工作流/' },
+            { text: 'LLM 命名与周边知识', link: '/article/ai/LLM命名与周边知识', },
           ]
         }
       ],
