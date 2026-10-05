@@ -53,3 +53,23 @@
   padding-bottom: 6px;
   line-height: 1.5;
 }
+/* 图片点击放大（medium-zoom）：给个明确的可点提示 */
+.vp-doc img {
+  cursor: zoom-in;
+}
+
+/* 被链接包着的图片仍然是普通链接行为 */
+.vp-doc a img {
+  cursor: pointer;
+}
+/* 放大后的图片和遮罩都由 medium-zoom 直接挂在 <body> 下（不在 .vp-doc 里），
+   而它自带的样式没给这两层设 z-index；VitePress 的导航/侧边栏最高到
+   --vp-z-index-sidebar: 60，所以必须显式抬高：
+   遮罩 1000、图片 1001（图片始终要压在遮罩之上） */
+.medium-zoom-overlay {
+  z-index: 1000;
+}
+
+.medium-zoom-image--opened {
+  z-index: 1001;
+}

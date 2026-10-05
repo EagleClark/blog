@@ -4,6 +4,7 @@ import DefaultTheme from "vitepress/theme";
 import './styles.css'
 import confetti from './components/confetti.vue';
 import busuanzi from 'busuanzi.pure.js';
+import mediumZoom from 'medium-zoom';
 import VisitorPanel from './components/VisitorPanel.vue';
 import Layout from './components/Layout.vue';
 
@@ -167,11 +168,22 @@ export default {
       // 延迟到 requestAnimationFrame，等 VitePress hydration 和主题应用完成后再渲染
       requestAnimationFrame(() => renderMermaid());
 
+      // 图片点击放大：VitePress 没有内置灯箱，这里用 medium-zoom
+      // - background 跟随主题变量，深色模式下不会突然变白
+      // - 排除被链接包着的图片（徽章、外链图），那类图点击应该走链接
+      const zoom = mediumZoom({ background: 'var(--vp-c-bg)', margin: 24 });
+      const attachZoom = () => {
+        zoom.detach();
+        zoom.attach('.vp-doc img:not(a img)');
+      };
+      requestAnimationFrame(attachZoom);
+
       const originalOnAfterRouteChange = router.onAfterRouteChange;
       router.onAfterRouteChange = () => {
         originalOnAfterRouteChange?.();
         busuanzi.fetch();
         renderMermaid();
+        attachZoom();   // SPA 切页后 DOM 换新，需要重新挂一次
       };
 
       const observer = new MutationObserver(() => {
