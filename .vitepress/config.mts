@@ -202,6 +202,7 @@ export default defineConfig({
             { text: '基于WSL的AI开发环境搭建', link: '/article/ai/基于WSL的AI开发环境搭建/' },
             { text: '我的AI工作流', link: '/article/ai/我的AI工作流/' },
             { text: 'LLM 命名与周边知识', link: '/article/ai/LLM命名与周边知识', },
+            { text: 'AI操控浏览器的若干方法', link: '/article/ai/AI操控浏览器的若干方法/', },
           ]
         }
       ],
