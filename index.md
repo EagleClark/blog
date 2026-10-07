@@ -28,6 +28,10 @@ hero:
       link: /article/other/孙子兵法/01   
 
 features:
+  - title: AI
+    details: AI技术的使用与探索
+    link: /article/ai/Ollama部署本地大模型
+    icon: 🤖
   - title: 前端核心基础
     details: 有计算机领域的通用技能，也有前端领域的核心基础以及进阶技能
     link: /article/front-end/Babel
@@ -47,11 +51,7 @@ features:
   - title: 设计模式
     details: JavaScript版设计模式
     link: /article/design-patterns/设计原则
-    icon: 🏗️
-  - title: AI
-    details: AI技术的使用与探索
-    link: /article/ai/Ollama部署本地大模型
-    icon: 🤖
+    icon: 🏗️ 
 ---
 
 <confetti />
