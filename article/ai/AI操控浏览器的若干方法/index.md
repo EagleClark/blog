@@ -20,8 +20,11 @@
 
 ### 方案本质
 
-```text
-LLM → 生成脚本 → Playwright（Playwright API）→ CDP 等浏览器原生协议 → 浏览器
+```mermaid
+flowchart LR
+    LLM["LLM"] -->|"生成脚本"| PW["Playwright"]
+    PW -->|"调用 Playwright API"| CDP["CDP 等浏览器原生协议"]
+    CDP --> BROWSER["浏览器"]
 ```
 
 ### 使用场景
@@ -229,10 +232,13 @@ await page.context().storageState({ path: 'playwright/.auth/user.json' });
 
 ### 方案本质
 
-```text
-LLM → agent-browser → Rust 守护进程（常驻，直连 CDP）→ 浏览器
-       ↑                       |       ↑              |
-       └─ snapshot（@e1/@e2…）←┘       └─ 原始数据 ────┘
+```mermaid
+flowchart LR
+    LLM["LLM"] -->|"读 SKILL / 下发指令"| AB["agent-browser CLI"]
+    AB --> DAEMON["Rust 守护进程<br/>常驻，直连 CDP"]
+    DAEMON --> BROWSER["浏览器"]
+    BROWSER -.->|"原始数据"| DAEMON
+    DAEMON -.->|"snapshot 快照（@e1/@e2…）"| LLM
 ```
 
 LLM 读取 SKILL，把指令交给守护进程；守护进程直连 CDP 与浏览器交互，把操作快照返回给 LLM，LLM 再决定下一步。
@@ -319,8 +325,11 @@ npx skills add vercel-labs/agent-browser
 
 ### 方案本质
 
-```text
-Agent ⇄ 桥 ⇄ 浏览器扩展 ⇄ 你正开着的标签页
+```mermaid
+flowchart LR
+    AGENT["Agent<br/>Claude Code / Codex / DSH"] <--> BRIDGE["桥<br/>第三方：本机小服务<br/>官方：厂商云服务"]
+    BRIDGE <--> EXT["浏览器扩展"]
+    EXT <--> TAB["你正开着的标签页"]
 ```
 
 中间那个“桥”是关键。扩展和 Agent 是两个互相隔离的进程：扩展被关在浏览器的沙箱里，只能连白名单里的地址；Agent 要么是本机的一个命令行进程，要么是云端的一个会话。所以得有人替它们“传话”。
