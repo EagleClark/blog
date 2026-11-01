@@ -203,6 +203,7 @@ export default defineConfig({
             { text: '我的AI工作流', link: '/article/ai/我的AI工作流/' },
             { text: 'LLM 命名与周边知识', link: '/article/ai/LLM命名与周边知识', },
             { text: 'AI操控浏览器的若干方法', link: '/article/ai/AI操控浏览器的若干方法/', },
+            { text: 'Multica 入门教程', link: '/article/ai/Multica入门教程/', },
           ]
         }
       ],
