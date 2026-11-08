@@ -154,16 +154,52 @@ Google 的档位则是 `Flash-Lite` < `Flash` < `Pro`，`gemini-3.8-flash` 就�
 | `F16` / `bf16` | 半精度，训练与推理默认 | 2 字节/参数 |
 | `Q8_0` / `int8` | 8bit 量化 | 1 字节/参数 |
 | `Q6_K` / `Q5_K_M` / `Q4_K_M` | GGUF 的 k-quant 系列，数字是位宽，`K` 是分块量化，`_S`/`_M` 是 small/medium 混合策略 | 0.5～0.8 字节/参数 |
-| `AWQ` / `GPTQ` / `EXL2` | 面向 GPU 的 4bit 量化方案 | 约 0.5 字节/参数 |
+| `AWQ` / `GPTQ` / `EXL2` | 面向 GPU 的权重量化方案，4bit 最常见（GPTQ 另有 8bit） | 4bit 约 0.5、8bit 约 1 字节/参数 |
 | `MLX` | Apple 的 MLX 框架专用格式 | 视量化档位而定 |
 | `Q2_K` / `Q3_K` | 极限压缩 | 效果损失明显，谨慎使用 |
 
 同一个模型，`Q4_K_M` 和 `Q8_0` 的差距是肉眼可见的——量化不是免费的午餐，降的是显存，涨的是困惑度（PPL，Perplexity）。
 
-顺带把缩写补全：**GGUF**（GPT-Generated Unified Format）是 llama.cpp 用的模型文件格式；**AWQ**（Activation-aware Weight Quantization）和 **GPTQ**（Generative Pre-trained Transformer Quantization）是 GPU 上的 4bit 量化方案；**EXL2** 属于 ExLlamaV2，**MLX** 是 Apple 的机器学习框架；**bf16**（Brain Floating Point 16）是常用的半精度格式之一。
+顺带把缩写补全：**GGUF**（GPT-Generated Unified Format）是 llama.cpp 用的模型文件格式；**AWQ**（Activation-aware Weight Quantization）和 **GPTQ**（Generative Pre-trained Transformer Quantization）是 GPU 上主流的权重量化方案（最常用 4bit，GPTQ 另有 8bit 版本）；**EXL2** 属于 ExLlamaV2，**MLX** 是 Apple 的机器学习框架；**bf16**（Brain Floating Point 16）是常用的半精度格式之一。
+
+上面那张表其实混着两套语言：一套是**容器 / 方案名**（GGUF 的 `Q4_K_M`、`AWQ`、`GPTQ`、`EXL2`、`MLX`），另一套是**位宽 × 位宽**（`w8a8`、`w4a16`）。后者不单独占一种文件格式，而是推理框架和 HF 仓库通用的"权重压到几位、激活压到几位"的写法——vLLM / SGLang 部署时最常撞见的就是它。
+
+> [!TIP] w8a8 怎么读
+> `w` = weights（权重），`a` = activations（激活），数字是各自量化的位宽。`w8a8` 就是权重 8bit、激活 8bit；`w4a16` 是权重 4bit、激活仍是 16bit。位宽越低越省显存，而**激活位宽决定算力能不能跟着一起降**——这是这族后缀里最容易被忽略的一层。
+
+| 写法 | 具体指什么 | 常见载体 | 显存 | 吞吐 | 精度 |
+| --- | --- | --- | --- | --- | --- |
+| `w8a8`（INT8） | 权重、激活都是 8bit 整数 | TensorRT-LLM、vLLM / SGLang 的 `w8a8_int8`（compressed-tensors） | 约 1 字节/参数 | 带宽和算力都省一半，大 batch 涨得明显 | 依赖校准集（SmoothQuant 一类），比 FP8 更吃校准数据 |
+| `w8a8`（FP8） | 权重、激活都是 8bit 浮点（E4M3） | vLLM / SGLang 的 `fp8`（H100 / L40S / 4090 等 Hopper、Ada 卡） | 约 1 字节/参数 | 走 FP8 Tensor Core，算力约 ×2，prefill 受益最大 | 接近无损，目前最"无痛"的一档 |
+| `w8a16` | 权重 8bit，激活 16bit | `GPTQ-Int8`、bitsandbytes 的 INT8 | 约 1 字节/参数 | 只省权重带宽，算还是 FP16 | 比 4bit 稳：激活不量化，最保守 |
+| `w4a16` | 权重 4bit，激活 16bit | `AWQ`、`GPTQ-Int4`（vLLM / SGLang 上的主力） | 约 0.5 字节/参数 | 只省带宽：decode 阶段涨，大 batch 几乎不涨 | 损失最大，但通常可接受 |
+| `fp4` / `nvfp4` | 权重、激活都 4bit 浮点 | TensorRT-LLM、新版 vLLM（B200 / B300 等 Blackwell 卡，生态还在铺） | 约 0.5 字节/参数 | 算力再翻一倍 | 和 `w4a16` 接近，同属有损 |
+
+为什么 `w4a16` 只快在 decode？因为权重虽然只存 4bit，进矩阵乘之前还得反量化回 16bit 再算——**省的是读权重的带宽，不是算力**。逐 token 生成的 decode 阶段正好卡在带宽上，收益就大；prefill 和大 batch 是算力瓶颈，`w4a16` 基本只省显存、不提吞吐。`w8a8` / `fp8` 把算力也一起降了，才能两头都赚，代价是硬件门槛（FP8 一般要 Ada / Hopper 以上）和校准集（INT8 路线要，FP8 动态量化一般不用）。
+
+判断一个仓库到底是哪一档，别只看名字：打开 `config.json` 看 `quantization_config`，先看 `quant_method`（`fp8` / `awq` / `gptq` / `compressed-tensors` / `bitsandbytes`）定方案，位宽再具体看——GPTQ / AWQ 配置里有 `bits` 字段（4 或 8），FP8 看 `quant_type` / `fmt`（`e4m3`）。于是 `awq` + `bits: 4` 就是 `w4a16`，`gptq` + `bits: 8` 就是 `w8a16`。vLLM / SGLang 一般会自己读这个字段，不用手传 `--quantization`（除非是你自己导出的、或者字段缺失）。
+
+**和 GGUF 的 `Q4_K_M` 有什么区别？** 本质上 `Q4_K_M` 其实也是"权重 4～5bit、激活保持高精度"，大致就是 `w4a16` 的一种；真正的差别在**容器、引擎和命名语法**：
+
+| | `Q4_K_M`（GGUF） | `w4a16`（AWQ / GPTQ） |
+| --- | --- | --- |
+| 名字里报什么 | 量化方案 + 位宽 + 分块策略（`K` = k-quant 分块，`_M` = medium 混合） | 只有权重位宽和激活位宽两个数字，不含方案 |
+| 文件 / 引擎 | `.gguf`，喂给 llama.cpp、Ollama、LM Studio | `.safetensors`，喂给 vLLM、SGLang、TensorRT-LLM |
+| 典型硬件 | CPU、Apple Silicon、消费级显卡（还能部分卸载） | NVIDIA GPU（AWQ / GPTQ 一般要 compute capability 7.5+） |
+
+所以 `Qwen2.5-7B-Instruct-Q4_K_M.gguf` 和 `Qwen2.5-7B-Instruct-AWQ` 装的都是约 4bit 的权重、体积也差不多，但**只能喂给各自的引擎**——后缀就是在告诉你该喂给谁。
+
+**在 HF 模型名里怎么认**：官方模型名默认不带精度，但发布 FP8 / FP4 这类原生量化版时会把它补到名字末尾；社区量化版则写方案名，位宽藏在方案里：
+
+- 官方精度后缀——`Qwen/Qwen3-8B-FP8`、`Qwen/Qwen3-235B-A22B-FP8`（`w8a8` 的浮点实现；也有只压权重、激活留 16bit 的 FP8 变体）；
+- 社区方案后缀——`Qwen/Qwen2.5-72B-Instruct-AWQ`（`w4a16`）、`Qwen/Qwen2.5-72B-Instruct-GPTQ-Int8`（`w8a16`）；
+- 直接把位宽写进名字的 `-W8A8`——多见于国内平台和 ms-swift 这类工具链的导出，HF 官方名里反而少见。
+
+部署时基本就是 `vllm serve Qwen/Qwen3-8B-FP8`（或 `python -m sglang.launch_server --model-path Qwen/Qwen3-8B-FP8`），走哪种量化由仓库自带的配置决定，你不用在命令里再交代一遍。
 
 **例子（精度量化）**：
 - 写了——`Llama-3.1-70B-Instruct-Q4_K_M.gguf`（GGUF 格式，4bit 量化）、`…-AWQ`、`…-MLX`；
+- 位宽写法——`…-FP8`（多为 `w8a8` 浮点）、`…-AWQ` / `…-GPTQ-Int4`（`w4a16`）、`…-GPTQ-Int8`（`w8a16`）；
 - 没写——所有 API 模型（`gpt-5.4`、`qwen3-max`，精度由服务端决定）。
 
 ### 把六段拼起来：两个完整的例子
@@ -171,13 +207,13 @@ Google 的档位则是 `Flash-Lite` < `Flash` < `Pro`，`gemini-3.8-flash` 就�
 六段拆完了，拼起来看两个真实名字——一个官方发布的模型名，一个社区量化后的文件名：
 
 ```text
-Qwen3-30B-A3B-Instruct-2507         ← 官方发布的模型名：带规模、带日期，不写精度
+Qwen3-30B-A3B-Instruct-2507         ← 官方发布的模型名：带规模、带日期，默认不写精度
   Qwen       厂商/系列  阿里通义千问
   3          代际版本   千问第 3 代
   30B / A3B  参数量     30B 总参数，激活 3B（MoE）
   Instruct   能力定位   指令微调，能直接对话
   2507       快照日期   2025 年 07 月的快照
-  ——         精度/格式  官方模型名里不写精度
+  ——         精度/格式  默认不写；FP8 / FP4 原生量化版会加
 
 Llama-3.1-70B-Instruct-Q4_K_M.gguf  ← 社区量化后的文件名：带规模、带精度，不写日期
   Llama       厂商/系列   Meta
